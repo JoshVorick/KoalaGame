@@ -9,17 +9,22 @@
 #include <sstream>
 using namespace std;
 
+
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
+
 class LeafGame : public GameState
 {
 private:
 	//Leaf Puzzle variables
-	int numRows, numCol, theSelected, selected[6], arraySize, type, flipped;
+	int numRows, numCol, theSelected, selected[6], arraySize, type, flipped, doesWork;
 	bool leafStates[100];
 	ALLEGRO_BITMAP *leafDown, *leafUp, *background, *omNomNom;
 	bool hasWon();
 	ALLEGRO_SAMPLE *leafFlipSounds[4];
 	//Adventure/platformer variables
 	//Tree Punching variables
+	ALLEGRO_FONT *font36;
 public:
 	LeafGame();
 	void Update(int dir);

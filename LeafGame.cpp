@@ -7,28 +7,11 @@
 
 LeafGame::LeafGame()
 {
-	/*
 	srand(time(NULL));
 	state = LEAF_PUZZLE;
 	theSelected = -1;
+	flipped = 2;
 	doesWork = false;
-	flipped = false;
-	for(int i=0; i<3; i++) selected[i] = -2;
-	numRows = 8;
-	numCol = 6;
-	arraySize = 48;
-	for(int i=0; i<arraySize;i++) leafStates[i] = rand() % 2;
-	leafDown = al_load_bitmap("leafDown.bmp");
-	al_convert_mask_to_alpha(leafDown, al_map_rgb(255,255,255));
-	leafUp = al_load_bitmap("leafUp.bmp");
-	al_convert_mask_to_alpha(leafUp, al_map_rgb(255,255,255));
-	background = al_load_bitmap("background.bmp");
-	omNomNom = al_load_bitmap("omNomNom.bmp");
-	*/
-	srand(time(NULL));
-	state = LEAF_PUZZLE;
-	theSelected = -1;
-	flipped = 1;
 	for(int i=0; i<6; i++) selected[i] = -2;
 	leafDown = al_load_bitmap("leafDown.bmp");
 	al_convert_mask_to_alpha(leafDown, al_map_rgb(255,255,255));
@@ -40,6 +23,7 @@ LeafGame::LeafGame()
 	leafFlipSounds[1] = al_load_sample("Audio/Fwoo.wav");
 	leafFlipSounds[2] = al_load_sample("Audio/Swoosh.wav");
 	leafFlipSounds[3] = al_load_sample("Audio/Swooshhh.wav");
+	font36 = al_load_font("AAJAX.ttf",36,0);
 }
 
 void LeafGame::Init(int w, int h)
@@ -113,12 +97,6 @@ void LeafGame::Init(int w, int h)
 		}
 	}
 	
-	if(openfile == NULL)
-	{
-		state = NULL;
-		break;
-	}
-	
 	getline(openfile,str, ' ');
 	stringstream convert(str.c_str());
 	convert >> type;
@@ -145,6 +123,7 @@ void LeafGame::Update(int dir)
 {
 	if(dir > -1)
 	{
+		doesWork = true;
 		if(dir==SPACE)
 		{
 			if(type != 5)
@@ -156,34 +135,40 @@ void LeafGame::Update(int dir)
 			{
 				switch (flipped)
 				{
-					case 0:
+					case 2:
 					{
 						flipped = 3;
+						if(theSelected + numRows + (int)floor(theSelected/numRows)%2 < numRows * numCol)
+							theSelected += numRows + (int)floor(theSelected/numRows)%2 - 1;
 						break;
 					}
 					case 3:
-					{
-						flipped = 1;
-						break;
-					}
-					case 1:
-					{
-						flipped = 2;
-						break;
-					}
-					case 2:
 					{
 						flipped = 4;
 						break;
 					}
 					case 4:
 					{
+						flipped = 0;
+						break;
+					}
+					case 0:
+					{
+						flipped = 1;
+						break;
+					}
+					case 1:
+					{
 						flipped = 5;
+						if(theSelected + numRows + (int)floor(theSelected/numRows)%2 < numRows * numCol - 1)
+							theSelected += numRows + (int)floor(theSelected/numRows)%2;
 						break;
 					}
 					case 5:
 					{
-						flipped = 0;
+						flipped = 2;
+						if(theSelected >= 2*numRows)
+							theSelected -= 2*numRows;
 						break;
 					}
 				}
@@ -229,34 +214,52 @@ void LeafGame::Update(int dir)
 			{
 				if(theSelected % (2*numRows) != 2*numRows - 1 && theSelected >= numRows)
 					selected[1] = theSelected - numRows + (int)floor(theSelected/numRows)%2;
-				else Update(dir);
+				else {
+					selected[1] = -2; 
+					doesWork = false;
+				}
 				if(theSelected % (2*numRows) != 0 && theSelected >= numRows)
 					selected[2] = theSelected - numRows + (int)floor(theSelected/numRows)%2 - 1;
-				else Update(dir);
+				else {
+					selected[2] = -2; 
+					doesWork = false;
+				}
 			}
 			else
 			{
 				if(theSelected % (2*numRows) != 0 && (theSelected/numRows) < numCol - 1 )
 					selected[1] = theSelected + numRows + (int)floor(theSelected/numRows)%2 - 1;
-				else Update(dir);
+				else {
+					selected[1] = -2; 
+					doesWork = false;
+				}
 				if(theSelected % (2*numRows) != 2*numRows - 1 && (theSelected/numRows) < numCol - 1 )
 					selected[2] = theSelected + numRows + (int)floor(theSelected/numRows)%2;
-				else Update(dir);
+				else {
+					selected[2] = -2; 
+					doesWork = false;
+				}
 			}
 		}
 		if(type >= 4)
 		{
 			if(flipped > 2)
 			{
-				if(theSelected % (2*numRows) != numRows)
+				if(theSelected % numRows != 0)
 					selected[3] = theSelected - 1;
-				else Update(dir);
+				else {
+					selected[3] = -2; 
+					doesWork = false;
+				}
 			}
 			else
 			{
-				if(theSelected % (2*numRows) != numRows)
+				if(theSelected % numRows != 0)
 					selected[3] = theSelected - 1;
-				else Update(dir);
+				else {
+					selected[3] = -2; 
+					doesWork = false;
+				}
 			}
 		}
 		if(type >= 5)
@@ -265,32 +268,62 @@ void LeafGame::Update(int dir)
 			{
 				case 0:
 				{
-					selected[4] = ;
+					if(theSelected >= numRows && theSelected % numRows != 0)
+						selected[4] = theSelected - numRows + (int)floor(theSelected/numRows)%2 - 1;
+					else {
+						selected[4] = -2; 
+						doesWork = false;
+					}
 					break;
 				}
 				case 1:
 				{
-					selected[4] = ;
+					if(theSelected % numRows != numRows - 1)
+						selected[4] = theSelected + 1;
+					else {
+						selected[4] = -2; 
+						doesWork = false;
+					}
 					break;
 				}
 				case 2:
 				{
-					selected[4] = ;
+					if(theSelected / numRows < numCol - 2)
+						selected[4] = theSelected + 2 * numRows;
+					else {
+						selected[4] = -2; 
+						doesWork = false;
+					}
 					break;
 				}
 				case 3:
 				{
-					selected[4] = ;
+					if(theSelected % numRows != numRows - 1)
+						selected[4] = theSelected + 1;
+					else {
+						selected[4] = -2; 
+						doesWork = false;
+					}
 					break;
 				}
 				case 4:
 				{
-					selected[4] = ;
+					if(theSelected < numRows * (numCol - 1) && theSelected % numRows != 0)
+						selected[4] = theSelected + numRows - 1 + (int)floor(theSelected/numRows)%2;
+					else {
+						selected[4] = -2; 
+						doesWork = false;
+					}
 					break;
 				}
 				case 5:
 				{
-					selected[4] = ;
+					if(theSelected > 2*numRows -1)
+						selected[4] = theSelected - 2 * numRows;
+					else {
+						selected[4] = -2; 
+						doesWork = false;
+					}
 					break;
 				}
 			}
@@ -300,14 +333,19 @@ void LeafGame::Update(int dir)
 
 void LeafGame::Enter()
 {
-	for(int i=0; i<6; i++)
+	if(doesWork)
 	{
-		if(selected[i] > -1 && selected[i] < arraySize)
-			leafStates[selected[i]] = !leafStates[selected[i]];
+		for(int i=0; i<6; i++)
+		{
+			if(selected[i] > -1 && selected[i] < arraySize)
+				leafStates[selected[i]] = !leafStates[selected[i]];
+		}
+		al_play_sample(leafFlipSounds[rand() % 3], 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
+		if(hasWon())
+		{
+			state = MENU;
+		}
 	}
-	al_play_sample(leafFlipSounds[rand() % 3], 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
-	if(hasWon())
-		state = MENU;
 }
 
 bool LeafGame::hasWon()
@@ -342,12 +380,16 @@ void LeafGame::Render()
 		{
 			int xCorner = 310 + 70*(selected[i]%numRows) + 34*((int)(floor(selected[i]/numRows))%2);
 			int yCorner = 130 + 85*((int)(floor(selected[i]/numRows)) % numCol);
-			if(i>0)
+			if(i>0 && doesWork)
 				al_draw_rectangle(xCorner, yCorner, xCorner + 55, yCorner+ 77, al_map_rgb(0,255,0),8);
-			else
+			else if (doesWork)
 				al_draw_rectangle(xCorner, yCorner, xCorner + 55, yCorner+ 77, al_map_rgb(0,0,255),8);
+			else
+				al_draw_rectangle(xCorner, yCorner, xCorner + 55, yCorner +77, al_map_rgb(255,0,0), 8);
 		}
 	}
+	
+	al_draw_textf(font36, al_map_rgb(255,0,255), 15, 15, 0, "Flipped: %i", flipped);
 	
 	//al_draw_bitmap(foreground,0,0,0);
 }

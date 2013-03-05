@@ -4,6 +4,7 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <string>
+#include "math.h"
 #include "Globals.h"
 #include "GameState.h"
 using namespace std;

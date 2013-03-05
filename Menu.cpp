@@ -1,5 +1,4 @@
 #include "Menu.h"
-#include "math.h"
 
 Menu::Menu()
 {
