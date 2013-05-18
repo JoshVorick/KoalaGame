@@ -13,17 +13,17 @@ LeafGame::LeafGame()
 	flipped = 2;
 	doesWork = false;
 	for(int i=0; i<6; i++) selected[i] = -2;
-	leafDown = al_load_bitmap("leafDown.bmp");
+	leafDown = al_load_bitmap("Audio and Images/leafDown.bmp");
 	al_convert_mask_to_alpha(leafDown, al_map_rgb(255,255,255));
-	leafUp = al_load_bitmap("leafUp.bmp");
+	leafUp = al_load_bitmap("Audio and Images/leafUp.bmp");
 	al_convert_mask_to_alpha(leafUp, al_map_rgb(255,255,255));
-	background = al_load_bitmap("background.bmp");
-	omNomNom = al_load_bitmap("omNomNom.bmp");
-	leafFlipSounds[0] = al_load_sample("Audio/Flip.wav");
-	leafFlipSounds[1] = al_load_sample("Audio/Fwoo.wav");
-	leafFlipSounds[2] = al_load_sample("Audio/Swoosh.wav");
-	leafFlipSounds[3] = al_load_sample("Audio/Swooshhh.wav");
-	font36 = al_load_font("AAJAX.ttf",36,0);
+	background = al_load_bitmap("Audio and Images/background.bmp");
+	omNomNom = al_load_bitmap("Audio and Images/omNomNom.bmp");
+	leafFlipSounds[0] = al_load_sample("Audio and Images/Flip.wav");
+	leafFlipSounds[1] = al_load_sample("Audio and Images/Fwoo.wav");
+	leafFlipSounds[2] = al_load_sample("Audio and Images/Swoosh.wav");
+	leafFlipSounds[3] = al_load_sample("Audio and Images/Swooshhh.wav");
+	font36 = al_load_font("Audio and Images/AAJAX.ttf",36,0);
 }
 
 void LeafGame::Init(int w, int h)
@@ -38,27 +38,27 @@ void LeafGame::Init(int w, int h)
 	
 	ifstream openfile(str.c_str());
 	*/
-	ifstream openfile("level3.txt");
+	ifstream openfile("Levels/level1.txt");
 	switch(w)
 	{
 		openfile.close();
-		openfile.open("level1.txt");
+		openfile.open("Levels/level4.txt");
 		case(1):
 		{
 			openfile.close();
-			openfile.open("level2.txt");
+			openfile.open("Levels/level2.txt");
 			break;
 		}
 		case(2):
 		{
 			openfile.close();
-			openfile.open("level3.txt");
+			openfile.open("Levels/level3.txt");
 			break;
 		}
 		case(3):
 		{
 			openfile.close();
-			openfile.open("level4.txt");
+			openfile.open("Levels/level4.txt");
 			break;
 		}
 		/*

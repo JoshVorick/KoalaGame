@@ -23,7 +23,7 @@ void Menu::Init(int w, int h)
 	selected = NONE;
 	y = fontHeight * options/2.0;
 	x = width/2;
-	font36 = al_load_font("AAJAX.ttf",36,0);
+	font36 = al_load_font("Audio and Images/AAJAX.ttf",36,0);
 }
 
 void Menu::Update(int dir)	//-1 for mouse movement

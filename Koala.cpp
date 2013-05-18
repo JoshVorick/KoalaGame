@@ -55,8 +55,8 @@ int main(void)
 	
 	event_queue = al_create_event_queue();
 	timer = al_create_timer(1.0/FPS);
-	font36 = al_load_font("Fonts/AAJAX.ttf", 36, 0);
-	end = al_load_sample("Audio/YouSuck.wav");
+	font36 = al_load_font("Audio and Images/AAJAX.ttf", 36, 0);
+	end = al_load_sample("Audio and Images/YouSuck.wav");
 	
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
