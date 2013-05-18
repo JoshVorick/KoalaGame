@@ -210,7 +210,7 @@ int main(void)
 		}
 	}
 	al_play_sample(end,1,0,1,ALLEGRO_PLAYMODE_ONCE,NULL);
-	//al_rest(1);
+	al_rest(1);
 	
 	al_destroy_display(display);
 	

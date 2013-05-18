@@ -62,6 +62,7 @@ void Menu::Render()
 	
 	if(selected == EXIT)al_draw_text(font36, al_map_rgb(0,0,255), x, tempY, ALLEGRO_ALIGN_CENTRE, "Exit");
 		else al_draw_text(font36, al_map_rgb(255,0,255), x, tempY, ALLEGRO_ALIGN_CENTRE, "Exit");
-		
+	
+	al_draw_text(font36, al_map_rgb(0,0,255), 15, 60, 0, "WASD to move selector, E to flip leaves, Q to rotate selector");
 	al_draw_textf(font36, al_map_rgb(100,10,100), 15, 15, 0, "h: %i w: %i", height, width);
 }

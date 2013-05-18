@@ -41,12 +41,8 @@ void LeafGame::Init(int w, int h)
 	ifstream openfile("level3.txt");
 	switch(w)
 	{
-		case(0):
-		{
-			openfile.close();
-			openfile.open("level1.txt");
-			break;
-		}
+		openfile.close();
+		openfile.open("level1.txt");
 		case(1):
 		{
 			openfile.close();
@@ -65,6 +61,7 @@ void LeafGame::Init(int w, int h)
 			openfile.open("level4.txt");
 			break;
 		}
+		/*
 		case(4):
 		{
 			openfile.close();
@@ -95,6 +92,7 @@ void LeafGame::Init(int w, int h)
 			openfile.open("level9.txt");
 			break;
 		}
+		*/
 	}
 	
 	getline(openfile,str, ' ');
