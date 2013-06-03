@@ -1,7 +1,6 @@
 #include "Menu.h"
 
-Menu::Menu()
-{
+Menu::Menu(){
 	state = MENU;
 	mouseX = 0;
 	mouseY = 0;
@@ -14,8 +13,7 @@ Menu::Menu()
 	x = width/2;
 }
 
-void Menu::Init(int w, int h)
-{
+void Menu::Init(int w, int h){
 	width = w;
 	height = h;
 	fontHeight = 36;
@@ -26,22 +24,18 @@ void Menu::Init(int w, int h)
 	font36 = al_load_font("Audio and Images/AAJAX.ttf",36,0);
 }
 
-void Menu::Update(int dir)	//-1 for mouse movement
-{
-	if(dir == UP)
-	{
+void Menu::Update(int dir){	//-1 for mouse movement
+	if(dir == UP)	{
 		if(selected > LEAF_PUZZLE)
 			selected--;
 		else selected = EXIT;
 	}
-	else if(dir == DOWN)
-	{
+	else if(dir == DOWN)	{
 		if(selected < EXIT)
 			selected++;
 		else selected = LEAF_PUZZLE;
 	}
-	else if(mouseY < (height/2 + Menu::y) && mouseY > (height/2 - Menu::y))	//Mouse is below top option and above bottom option
-	{
+	else if(mouseY < (height/2 + Menu::y) && mouseY > (height/2 - Menu::y)){	//*Mouse is below top option and above bottom option
 		int tempY = mouseY;								//So we don't mess up mouseY
 		tempY -= height/2 - (Menu::y);					//Moves range of y-values so that lower bound is 0
 		selected = ceil ((tempY-5) / fontHeight) + 1;	//The -5 adjusts for slight offset of draw_text
@@ -49,8 +43,7 @@ void Menu::Update(int dir)	//-1 for mouse movement
 		selected = NONE;
 } 
 
-void Menu::Render()
-{
+void Menu::Render(){
 	int tempY = height/2 - y;
 	if(selected == LEAF_PUZZLE)al_draw_text(font36, al_map_rgb(0,0,255), x, tempY, ALLEGRO_ALIGN_CENTRE, "Play Leaf Puzzle");
 		else al_draw_text(font36, al_map_rgb(255,0,255), x, tempY, ALLEGRO_ALIGN_CENTRE, "Play Leaf Puzzle");

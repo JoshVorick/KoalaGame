@@ -16,8 +16,6 @@ LeafGame::LeafGame(){
 	al_convert_mask_to_alpha(leafDown, al_map_rgb(255,255,255));
 	leafUp = al_load_bitmap("Audio and Images/leafUp.bmp");
 	al_convert_mask_to_alpha(leafUp, al_map_rgb(255,255,255));
-	rock = al_load_bitmap("Audio and Images/Rock.bmp");
-	al_convert_mask_to_alpha(rock, al_map_rgb(255,255,255));
 	background = al_load_bitmap("Audio and Images/background.bmp");
 	omNomNom = al_load_bitmap("Audio and Images/omNomNom.bmp");
 	leafFlipSounds[0] = al_load_sample("Audio and Images/Flip.wav");
@@ -91,28 +89,18 @@ void LeafGame::Init(int w, int h){
 	getline(openfile,str, ' ');
 	stringstream convert1(str.c_str());
 	convert1 >> numRows;
-	numRows += 2;
 	
 	getline(openfile,str, ' ');
 	stringstream convert2(str.c_str());
 	convert2 >> numCol;
-	numCol += 2;
 	
 	arraySize = numRows*numCol;
 	
-	for(int i=0; i<numCol; i++)
-		leafStates[i] = 3;
-	for(int i=numCol; i<arraySize-numCol; i++)	{
-		if(((i+1) % numCol) < 2)
-			leafStates[i] = 3;
-		else{
+	for(int i=0; i<arraySize; i++)	{
 		getline(openfile,str, ' ');
 		stringstream convert3(str.c_str());
 		convert3 >> leafStates[i];
-		}
 	}
-	for(int i=arraySize - numCol; i<arraySize; i++)
-		leafStates[i] = 3;
 }
 
 void LeafGame::Update(int dir){
@@ -126,12 +114,12 @@ void LeafGame::Update(int dir){
 			}else{
 				switch (flipped){
 					case 2:{
-						flipped = 7;
+						flipped = 3;
 						if(theSelected + numRows + (int)floor(theSelected/numRows)%2 < numRows * numCol)
 							theSelected += numRows + (int)floor(theSelected/numRows)%2 - 1;
 						break;
 					}
-					case 7:{
+					case 3:{
 						flipped = 4;
 						break;
 					}
@@ -259,7 +247,7 @@ void LeafGame::Update(int dir){
 						doesWork = false;
 					}break;
 				}
-				case 7:{
+				case 3:{
 					if(theSelected % numRows != numRows - 1)
 						selected[4] = theSelected + 1;
 					else {
@@ -271,7 +259,7 @@ void LeafGame::Update(int dir){
 					if(theSelected < numRows * (numCol - 1) && theSelected % numRows != 0)
 						selected[4] = theSelected + numRows - 1 + (int)floor(theSelected/numRows)%2;
 					else {
-						selected[4] = -2; 
+						selected[4] = -2;
 						doesWork = false;
 					}break;
 				}
@@ -284,12 +272,6 @@ void LeafGame::Update(int dir){
 					}break;
 				}
 			}
-		}
-	}
-	for(int i=0; i<6; i++){
-		if(leafStates[selected[i]] == 3){
-			doesWork = false;
-			break;
 		}
 	}
 }
@@ -321,9 +303,7 @@ void LeafGame::Render(){
 	al_draw_bitmap(background,0,0,0);
 	
 	for(int i=0;i<arraySize;i++){
-		if(leafStates[i] == 3)
-			al_draw_bitmap(rock, 300 + 70*(i%numRows) + 34*((int)(floor(i/numRows))%2),100 + 85*((int)(floor(i/numRows)) % numCol),0);
-		else if(leafStates[i])
+		if(leafStates[i])
 			al_draw_bitmap(leafUp, 300 + 70*(i%numRows) + 34*((int)(floor(i/numRows))%2),100 + 85*((int)(floor(i/numRows)) % numCol),0);
 		else
 			al_draw_bitmap(leafDown, 300 + 70*(i%numRows) + 34*((int)(floor(i/numRows))%2),100 + 85*((int)(floor(i/numRows)) % numCol),0);
@@ -336,6 +316,8 @@ void LeafGame::Render(){
 				al_draw_rectangle(xCorner, yCorner, xCorner + 55, yCorner+ 77, al_map_rgb(0,0,255),8);
 			else
 				al_draw_rectangle(xCorner, yCorner, xCorner + 55, yCorner +77, al_map_rgb(255,0,0), 8);
+			if(i==0)
+				al_draw_rectangle(xCorner, yCorner, xCorner + 55, yCorner+ 77, al_map_rgb(0,255,0),8);
 		}
 	}
 	al_draw_textf(font36, al_map_rgb(255,0,255), 15, 15, 0, "Flipped: %i", flipped);

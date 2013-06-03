@@ -8,16 +8,15 @@
 #include <list>
 
 #include "Menu.cpp"
-#include "Globals.h"
 #include "LeafGame.cpp"
+
 
 GameState *gameState;
 
 void changeState(int newState, int &oldState);
 int levelNumber = 0;
 
-int main(void)
-{
+int main(void){
 	//PRIMITIVES==============
 	bool done = false;
 	bool redraw = true;
@@ -69,27 +68,21 @@ int main(void)
 	
 	al_start_timer(timer);
 	
-	while(!(gameState->getState() == EXIT || done))
-	{
+	while(!(gameState->getState() == EXIT || done)){
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(event_queue, &ev);
 		
-		if(ev.type == ALLEGRO_EVENT_TIMER)				//Next sixtieth of a second
-		{
+		if(ev.type == ALLEGRO_EVENT_TIMER){				//Next sixtieth of a second
 			redraw = true;
-			if(gameState->getState() != curState)
-			{
+			if(gameState->getState() != curState){
 				changeState(gameState->getState(), curState);
 			}
 		}
-		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)	//Red 'X' is clicked
-		{
+		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE){	//Red 'X' is clicked
 			done = true;
 		}
-		else if(ev.type == ALLEGRO_EVENT_KEY_DOWN)
-		{
-			switch(ev.keyboard.keycode)
-			{
+		else if(ev.type == ALLEGRO_EVENT_KEY_DOWN){
+			switch(ev.keyboard.keycode){
 				case ALLEGRO_KEY_ESCAPE:
 					done = true;
 					break;
@@ -97,7 +90,6 @@ int main(void)
 					keys[UP] = true;
 					gameState->Update(UP);
 					break;
-					keys[DOWN] = true;
 				case ALLEGRO_KEY_DOWN:
 					keys[DOWN] = true;
 					gameState->Update(DOWN);
@@ -144,11 +136,8 @@ int main(void)
 					gameState->Enter();
 					break;
 			}
-		}
-		else if(ev.type == ALLEGRO_EVENT_KEY_UP)
-		{
-			switch(ev.keyboard.keycode)
-			{
+		}else if(ev.type == ALLEGRO_EVENT_KEY_UP){
+			switch(ev.keyboard.keycode){
 				case ALLEGRO_KEY_UP:
 					keys[UP] = false;
 					break;
@@ -186,22 +175,16 @@ int main(void)
 					keys[ENTER] = false;
 					break;
 			}
-		}
-		else if(ev.type == ALLEGRO_EVENT_MOUSE_AXES)
-		{
+		}else if(ev.type == ALLEGRO_EVENT_MOUSE_AXES){
 			gameState->SetMousePos(ev.mouse.x, ev.mouse.y);
 			gameState->Update(-10);
 		}
-		else if(ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
-		{
+		else if(ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN){
 			gameState->Enter();
-			if(gameState->getState() != curState)
-			{
+			if(gameState->getState() != curState){
 				changeState(gameState->getState(), curState);
 			}
-		}
-		if(redraw & al_is_event_queue_empty(event_queue))			//Draw stuff
-		{
+		}if(redraw & al_is_event_queue_empty(event_queue)){			//Draw stuff
 			redraw = false;
 			gameState->Render();
 			
@@ -217,17 +200,14 @@ int main(void)
 	return 0;
 }
 
-void changeState(int newState, int &oldState)
-{
-	if(newState == LEAF_PUZZLE)
-	{
+void changeState(int newState, int &oldState){
+	if(newState == LEAF_PUZZLE){
 		gameState = new LeafGame();
 		gameState->Init(levelNumber, -1);
 		levelNumber++;
 		oldState = LEAF_PUZZLE;
 	}
-	if(newState == MENU)
-	{
+	if(newState == MENU){
 		gameState = new Menu();
 		gameState->Init(1280, 720);
 		oldState = newState;
