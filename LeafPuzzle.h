@@ -2,7 +2,9 @@
 
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_acodec.h>
+#include "math.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -12,19 +14,18 @@ using namespace std;
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 
-class LeafGame : public GameState{
+class LeafPuzzle : public GameState{
 	private:
-		//Leaf Puzzle variables
-		int numRows, numCol, theSelected, selected[6], arraySize, type, flipped, doesWork;
-		int leafStates[100];
-		ALLEGRO_BITMAP *leafDown, *leafUp, *background, *omNomNom;
 		bool hasWon();
+		//Leaf Puzzle variables
+		int numRows, numCol, theSelected, selected[6], arraySize, type, flipped, doesWork, leafStates[200];
+		ALLEGRO_BITMAP *leafDown, *leafUp, *background, *omNomNom, *rock;
 		ALLEGRO_SAMPLE *leafFlipSounds[4];
 		//Adventure/platformer variables
 		//Tree Punching variables
 		ALLEGRO_FONT *font36;
 	public:
-		LeafGame();
+		LeafPuzzle();
 		void Update(int dir);
 		void Render();
 		void Enter();

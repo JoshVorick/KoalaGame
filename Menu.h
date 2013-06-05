@@ -1,7 +1,7 @@
 #pragma once
 
-enum KEYS{UP,DOWN,LEFT,RIGHT,SPACE,ESCAPE,ENTER,P};
-enum SELECTED{MENU, LEAF_PUZZLE, HELP, EXIT, NONE};
+enum KEYS{UP,DOWN,LEFT,RIGHT,SPACE,ESCAPE,ENTER,P,E};
+enum SELECTED{MENU, LEAF_PUNCH, HELP, EXIT, LEAF_PUZZLE, NONE};
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
@@ -13,8 +13,8 @@ using namespace std;
 
 class Menu : public GameState{
 	private:
-		int width;
-		int height;
+		//int width;
+		//int height;
 		int selected;
 		int fontHeight;
 		int options;
@@ -26,7 +26,7 @@ class Menu : public GameState{
 		
 	public:
 		Menu();
-		void Enter(){state = selected;}
+		void Enter();
 		void Render();
 		void Update(int dir);
 		void Init(int w, int h);

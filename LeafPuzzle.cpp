@@ -1,11 +1,8 @@
 #pragma once
 
-#include <allegro5/allegro_primitives.h>
+#include "LeafPuzzle.h"
 
-#include "math.h"
-#include "LeafGame.h"
-
-LeafGame::LeafGame(){
+LeafPuzzle::LeafPuzzle(){
 	srand(time(NULL));
 	state = LEAF_PUZZLE;
 	theSelected = -1;
@@ -27,7 +24,7 @@ LeafGame::LeafGame(){
 	font36 = al_load_font("Audio and Images/AAJAX.ttf",36,0);
 }
 
-void LeafGame::Init(int w, int h){
+void LeafPuzzle::Init(int w, int h){
 	string str;
 	/*
 	ifstream openlevels("Levels.txt");
@@ -49,39 +46,37 @@ void LeafGame::Init(int w, int h){
 			openfile.close();
 			openfile.open("Levels/level3.txt");
 			break;
-			}
+		}
 		case(3):{
 			openfile.close();
 			openfile.open("Levels/level4.txt");
 			break;
 		}
-		/*
 		case(4):{
 			openfile.close();
-			openfile.open("level5.txt");
+			openfile.open("Levels/level5.txt");
 			break;
 		}
 		case(5):{
 			openfile.close();
-			openfile.open("level6.txt");
+			openfile.open("Levels/level6.txt");
 			break;
 		}
 		case(6):{
 			openfile.close();
-			openfile.open("level7.txt");
+			openfile.open("Levels/level7.txt");
 			break;
 		}
 		case(7):{
 			openfile.close();
-			openfile.open("level8.txt");
+			openfile.open("Levels/level8.txt");
 			break;
 		}
 		case(8):{
 			openfile.close();
-			openfile.open("level9.txt");
+			openfile.open("Levels/level9.txt");
 			break;
 		}
-		*/
 	}
 	
 	getline(openfile,str, ' ');
@@ -100,10 +95,10 @@ void LeafGame::Init(int w, int h){
 	
 	arraySize = numRows*numCol;
 	
-	for(int i=0; i<numCol; i++)
+	for(int i=0; i<numRows; i++)
 		leafStates[i] = 3;
-	for(int i=numCol; i<arraySize-numCol; i++)	{
-		if(((i+1) % numCol) < 2)
+	for(int i=numCol; i<arraySize-numRows; i++)	{
+		if(((i+1) % numRows) < 2)
 			leafStates[i] = 3;
 		else{
 		getline(openfile,str, ' ');
@@ -111,12 +106,16 @@ void LeafGame::Init(int w, int h){
 		convert3 >> leafStates[i];
 		}
 	}
-	for(int i=arraySize - numCol; i<arraySize; i++)
+	for(int i=arraySize - numRows; i<arraySize; i++)
 		leafStates[i] = 3;
+	theSelected = numRows;
 }
 
-void LeafGame::Update(int dir){
-	if(dir > -1)	{
+void LeafPuzzle::Update(int dir){
+	if(dir == E)
+		for(int i=0; i<5; i++)
+			Update(SPACE);
+	else if(dir > -1)	{
 		doesWork = true;
 		if(dir==SPACE){
 			if(type != 5){
@@ -294,7 +293,7 @@ void LeafGame::Update(int dir){
 	}
 }
 
-void LeafGame::Enter(){
+void LeafPuzzle::Enter(){
 	if(doesWork){
 		for(int i=0; i<6; i++){
 			if(selected[i] > -1 && selected[i] < arraySize)
@@ -302,14 +301,14 @@ void LeafGame::Enter(){
 		}
 		al_play_sample(leafFlipSounds[rand() % 3], 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
 		if(hasWon())
-			state = MENU;
+			state = LEAF_PUNCH;
 	}
 }
 
-bool LeafGame::hasWon(){
+bool LeafPuzzle::hasWon(){
 	bool won = true;
 	for(int i=0;i<arraySize;i++){
-		if(!leafStates[i]){
+		if(leafStates[i] == 0){
 			won = false;
 			break;
 		}
@@ -317,28 +316,30 @@ bool LeafGame::hasWon(){
 	return won;
 }
 
-void LeafGame::Render(){
+void LeafPuzzle::Render(){
 	al_draw_bitmap(background,0,0,0);
 	
+	int xstart = 150;
+	int ystart = 50;
 	for(int i=0;i<arraySize;i++){
 		if(leafStates[i] == 3)
-			al_draw_bitmap(rock, 300 + 70*(i%numRows) + 34*((int)(floor(i/numRows))%2),100 + 85*((int)(floor(i/numRows)) % numCol),0);
+			al_draw_bitmap(rock, xstart + 70*(i%numRows) + 34*((int)(floor(i/numRows))%2), ystart + 85*((int)(floor(i/numRows)) % numCol),0);
 		else if(leafStates[i])
-			al_draw_bitmap(leafUp, 300 + 70*(i%numRows) + 34*((int)(floor(i/numRows))%2),100 + 85*((int)(floor(i/numRows)) % numCol),0);
+			al_draw_bitmap(leafUp, xstart + 70*(i%numRows) + 34*((int)(floor(i/numRows))%2), ystart + 85*((int)(floor(i/numRows)) % numCol),0);
 		else
-			al_draw_bitmap(leafDown, 300 + 70*(i%numRows) + 34*((int)(floor(i/numRows))%2),100 + 85*((int)(floor(i/numRows)) % numCol),0);
+			al_draw_bitmap(leafDown, xstart + 70*(i%numRows) + 34*((int)(floor(i/numRows))%2), ystart + 85*((int)(floor(i/numRows)) % numCol),0);
 	}
 	for(int i=0;i<6;i++){
 		if(selected[i] > -1 && selected[i] < arraySize){
-			int xCorner = 310 + 70*(selected[i]%numRows) + 34*((int)(floor(selected[i]/numRows))%2);
-			int yCorner = 130 + 85*((int)(floor(selected[i]/numRows)) % numCol);
+			int xCorner = xstart + 10 + 70*(selected[i]%numRows) + 34*((int)(floor(selected[i]/numRows))%2);
+			int yCorner = ystart + 30 + 85*((int)(floor(selected[i]/numRows)) % numCol);
 			if (doesWork)
 				al_draw_rectangle(xCorner, yCorner, xCorner + 55, yCorner+ 77, al_map_rgb(0,0,255),8);
 			else
 				al_draw_rectangle(xCorner, yCorner, xCorner + 55, yCorner +77, al_map_rgb(255,0,0), 8);
 		}
 	}
-	al_draw_textf(font36, al_map_rgb(255,0,255), 15, 15, 0, "Flipped: %i", flipped);
+	//al_draw_textf(font36, al_map_rgb(255,0,255), 15, 15, 0, "Level: %i", level);
 	
 	//al_draw_bitmap(foreground,0,0,0);
 }

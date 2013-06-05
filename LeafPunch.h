@@ -12,19 +12,14 @@ using namespace std;
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 
-class LeafGame : public GameState{
+class LeafPunch : public GameState{
 	private:
-		//Leaf Puzzle variables
-		int numRows, numCol, theSelected, selected[6], arraySize, type, flipped, doesWork;
-		int leafStates[100];
-		ALLEGRO_BITMAP *leafDown, *leafUp, *background, *omNomNom, *rock;
-		bool hasWon();
-		ALLEGRO_SAMPLE *leafFlipSounds[4];
-		//Adventure/platformer variables
-		//Tree Punching variables
+		int circleRadius, treeWidth, timeWaited, levelScore, curX, curY, prevX, prevY, treeX;			//treeY is always 0. tree X is its leftmost bound
+		ALLEGRO_BITMAP *tree, *target;
+		ALLEGRO_SAMPLE *treeHit[4];
 		ALLEGRO_FONT *font36;
 	public:
-		LeafGame();
+		LeafPunch();
 		void Update(int dir);
 		void Render();
 		void Enter();

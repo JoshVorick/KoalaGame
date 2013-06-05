@@ -8,10 +8,12 @@
 #include <list>
 
 #include "Menu.cpp"
-#include "LeafGame.cpp"
-
+#include "LeafPuzzle.cpp"
+#include "LeafPunch.cpp"
 
 GameState *gameState;
+const int WIDTH = 1280;
+const int HEIGHT = 1000;
 
 void changeState(int newState, int &oldState);
 int levelNumber = 0;
@@ -22,9 +24,9 @@ int main(void){
 	bool redraw = true;
 	bool keys[] = {false,false,false,false,false,false,false};
 	int curState = MENU;
+	int timeAfterWinning = 10;
+	int score = 0;
 	const int FPS = 60;
-	const int WIDTH = 1280;
-	const int HEIGHT = 720;
 	const int RESERVED_SAMPLES = 10;
 	
 	//ALLEGRO variables============
@@ -41,7 +43,11 @@ int main(void){
 	//Initializers
 	if(!al_init()) return -1;
 	
+	//Thisdisplay = al_create_display(WIDTH, HEIGHT);							//Initialize before flags to make window start at desired size instead of at most recent size
+	//andthis make it resizableal_set_new_display_flags(ALLEGRO_RESIZABLE);
 	display = al_create_display(WIDTH, HEIGHT);
+	al_set_window_position(display, 0, 0);
+	al_set_window_title(display, "MOTHERTRUCKING KOALAGAME");
 	
 	al_install_keyboard();
 	al_install_audio();
@@ -74,8 +80,12 @@ int main(void){
 		
 		if(ev.type == ALLEGRO_EVENT_TIMER){				//Next sixtieth of a second
 			redraw = true;
-			if(gameState->getState() != curState){
+			timeAfterWinning++;
+			if(gameState->getState() != curState && timeAfterWinning > 1)		//Allows graphics to update before game moves on to next state 
+				timeAfterWinning = 0;
+			if(timeAfterWinning == 1){
 				changeState(gameState->getState(), curState);
+				al_rest(.5);																									//Small pause so you can see completed stage
 			}
 		}
 		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE){	//Red 'X' is clicked
@@ -121,7 +131,7 @@ int main(void){
 					break;
 				case ALLEGRO_KEY_SPACE:
 					keys[SPACE] = true;
-					gameState->Update(SPACE);
+					gameState->Enter();
 					break;
 				case ALLEGRO_KEY_ENTER:
 					keys[ENTER] = true;
@@ -133,7 +143,7 @@ int main(void){
 					break;
 				case ALLEGRO_KEY_E:
 					keys[ENTER] = true;
-					gameState->Enter();
+					gameState->Update(E);
 					break;
 			}
 		}else if(ev.type == ALLEGRO_EVENT_KEY_UP){
@@ -181,10 +191,8 @@ int main(void){
 		}
 		else if(ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN){
 			gameState->Enter();
-			if(gameState->getState() != curState){
-				changeState(gameState->getState(), curState);
-			}
-		}if(redraw & al_is_event_queue_empty(event_queue)){			//Draw stuff
+		}
+		if(redraw & al_is_event_queue_empty(event_queue)){			//Draw stuff
 			redraw = false;
 			gameState->Render();
 			
@@ -193,7 +201,7 @@ int main(void){
 		}
 	}
 	al_play_sample(end,1,0,1,ALLEGRO_PLAYMODE_ONCE,NULL);
-	al_rest(1);
+	//al_rest(1);
 	
 	al_destroy_display(display);
 	
@@ -202,14 +210,19 @@ int main(void){
 
 void changeState(int newState, int &oldState){
 	if(newState == LEAF_PUZZLE){
-		gameState = new LeafGame();
-		gameState->Init(levelNumber, -1);
+		gameState = new LeafPuzzle();
+		gameState->Init(levelNumber, 0);
+		gameState->Update(RIGHT);
 		levelNumber++;
-		oldState = LEAF_PUZZLE;
+	}
+	if(newState == LEAF_PUNCH){
+		gameState = new LeafPunch();
+		gameState->Init(0, 0);
+		gameState->Update(-1);
 	}
 	if(newState == MENU){
 		gameState = new Menu();
-		gameState->Init(1280, 720);
-		oldState = newState;
+		gameState->Init(WIDTH, HEIGHT);
 	}
+	oldState = newState;
 }

@@ -8,8 +8,8 @@ class GameState
 		int state;
 		int mouseX;
 		int mouseY;
-		int width;
-		int height;
+		int width;		//initial width that the game is supposed to be played at
+		int height;		//initial height ""
 	public:
 		void virtual Enter(){}
 		void virtual Render(){}
