@@ -6,6 +6,7 @@ class GameState
 {
 	protected:
 		int state;
+		int score;
 		int mouseX;
 		int mouseY;
 		int width;		//initial width that the game is supposed to be played at
@@ -18,5 +19,7 @@ class GameState
 		void SetMousePos(int x, int y){mouseX = x; mouseY = y;}
 		//void virtual Destroy();
 		int getState(){return state;}
+		void setState(int newState){state = newState;}
+		int getScore(){return score;}
 		GameState(){state = MENU;}
 };

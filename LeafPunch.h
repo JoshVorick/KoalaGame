@@ -14,7 +14,7 @@ using namespace std;
 
 class LeafPunch : public GameState{
 	private:
-		int circleRadius, treeWidth, timeWaited, levelScore, curX, curY, prevX, prevY, treeX;			//treeY is always 0. tree X is its leftmost bound
+		int circleRadius, treeWidth, timeWaited, curX, curY, prevX, prevY, treeX, treeHealth;			//treeY is always 0. tree X is its leftmost bound
 		ALLEGRO_BITMAP *tree, *target;
 		ALLEGRO_SAMPLE *treeHit[4];
 		ALLEGRO_FONT *font36;

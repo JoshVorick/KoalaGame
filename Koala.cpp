@@ -17,6 +17,7 @@ const int HEIGHT = 1000;
 
 void changeState(int newState, int &oldState);
 int levelNumber = 0;
+int koalaSize = 0;
 
 int main(void){
 	//PRIMITIVES==============
@@ -25,7 +26,6 @@ int main(void){
 	bool keys[] = {false,false,false,false,false,false,false};
 	int curState = MENU;
 	int timeAfterWinning = 10;
-	int score = 0;
 	const int FPS = 60;
 	const int RESERVED_SAMPLES = 10;
 	
@@ -35,10 +35,7 @@ int main(void){
 	ALLEGRO_TIMER *timer;
 	ALLEGRO_FONT *font36;
 	ALLEGRO_SAMPLE *end;
-	
-	//object variables================
-	gameState = (new Menu());
-	gameState->Init(WIDTH, HEIGHT);
+	ALLEGRO_BITMAP *koala;
 	
 	//Initializers
 	if(!al_init()) return -1;
@@ -58,10 +55,16 @@ int main(void){
 	al_init_ttf_addon();
 	al_install_mouse();
 	
+	//object variables================
+	gameState = (new Menu());
+	gameState->Init(WIDTH, HEIGHT);
+	
 	event_queue = al_create_event_queue();
 	timer = al_create_timer(1.0/FPS);
 	font36 = al_load_font("Audio and Images/AAJAX.ttf", 36, 0);
 	end = al_load_sample("Audio and Images/YouSuck.wav");
+	koala = al_load_bitmap("Audio and Images/Koala.bmp");
+	al_convert_mask_to_alpha(koala, al_map_rgb(255,255,255));
 	
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
@@ -85,7 +88,7 @@ int main(void){
 				timeAfterWinning = 0;
 			if(timeAfterWinning == 1){
 				changeState(gameState->getState(), curState);
-				al_rest(.5);																									//Small pause so you can see completed stage
+				al_rest(.2);																									//Small pause so you can see completed stage
 			}
 		}
 		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE){	//Red 'X' is clicked
@@ -145,6 +148,10 @@ int main(void){
 					keys[ENTER] = true;
 					gameState->Update(E);
 					break;
+				case ALLEGRO_KEY_P:
+					keys[ENTER] = true;
+					gameState->setState(MENU);
+					break;
 			}
 		}else if(ev.type == ALLEGRO_EVENT_KEY_UP){
 			switch(ev.keyboard.keycode){
@@ -195,7 +202,7 @@ int main(void){
 		if(redraw & al_is_event_queue_empty(event_queue)){			//Draw stuff
 			redraw = false;
 			gameState->Render();
-			
+			al_draw_scaled_bitmap(koala, 0, 0, 250, 250, WIDTH-250-(25*koalaSize), HEIGHT-250, 250+(koalaSize*50), 250, 0);
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0,0,0));
 		}
@@ -209,16 +216,19 @@ int main(void){
 }
 
 void changeState(int newState, int &oldState){
+	int tempScore = gameState->getScore();
 	if(newState == LEAF_PUZZLE){
 		gameState = new LeafPuzzle();
-		gameState->Init(levelNumber, 0);
+		gameState->Init(levelNumber, tempScore);
 		gameState->Update(RIGHT);
 		levelNumber++;
 	}
 	if(newState == LEAF_PUNCH){
 		gameState = new LeafPunch();
-		gameState->Init(0, 0);
+		gameState->Init(0, tempScore);
 		gameState->Update(-1);
+		if(oldState == LEAF_PUZZLE)
+			koalaSize++;
 	}
 	if(newState == MENU){
 		gameState = new Menu();

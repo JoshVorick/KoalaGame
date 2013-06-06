@@ -18,7 +18,7 @@ class LeafPuzzle : public GameState{
 	private:
 		bool hasWon();
 		//Leaf Puzzle variables
-		int numRows, numCol, theSelected, selected[6], arraySize, type, flipped, doesWork, leafStates[200];
+		int numRows, numCol, theSelected, selected[6], arraySize, type, flipped, doesWork, leafStates[200], movesMade;
 		ALLEGRO_BITMAP *leafDown, *leafUp, *background, *omNomNom, *rock;
 		ALLEGRO_SAMPLE *leafFlipSounds[4];
 		//Adventure/platformer variables

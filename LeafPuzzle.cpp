@@ -7,6 +7,7 @@ LeafPuzzle::LeafPuzzle(){
 	state = LEAF_PUZZLE;
 	theSelected = -1;
 	flipped = 2;
+	movesMade = 0;
 	doesWork = false;
 	for(int i=0; i<6; i++) selected[i] = -2;
 	leafDown = al_load_bitmap("Audio and Images/leafDown.bmp");
@@ -24,8 +25,9 @@ LeafPuzzle::LeafPuzzle(){
 	font36 = al_load_font("Audio and Images/AAJAX.ttf",36,0);
 }
 
-void LeafPuzzle::Init(int w, int h){
+void LeafPuzzle::Init(int w, int h){		//w is levelNumber, h is score
 	string str;
+	score = h;
 	/*
 	ifstream openlevels("Levels.txt");
 	for(int i=0; i<=w+1; i++)
@@ -97,7 +99,7 @@ void LeafPuzzle::Init(int w, int h){
 	
 	for(int i=0; i<numRows; i++)
 		leafStates[i] = 3;
-	for(int i=numCol; i<arraySize-numRows; i++)	{
+	for(int i=numRows; i<arraySize-numRows; i++)	{
 		if(((i+1) % numRows) < 2)
 			leafStates[i] = 3;
 		else{
@@ -299,9 +301,12 @@ void LeafPuzzle::Enter(){
 			if(selected[i] > -1 && selected[i] < arraySize)
 				leafStates[selected[i]] = !leafStates[selected[i]];
 		}
+		movesMade++;
 		al_play_sample(leafFlipSounds[rand() % 3], 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
-		if(hasWon())
+		if(hasWon() && state != MENU){
 			state = LEAF_PUNCH;
+			score += 100 * arraySize * type / (movesMade + 2);
+		}
 	}
 }
 
@@ -339,7 +344,8 @@ void LeafPuzzle::Render(){
 				al_draw_rectangle(xCorner, yCorner, xCorner + 55, yCorner +77, al_map_rgb(255,0,0), 8);
 		}
 	}
-	//al_draw_textf(font36, al_map_rgb(255,0,255), 15, 15, 0, "Level: %i", level);
+	al_draw_textf(font36, al_map_rgb(255,0,255), 15, 15, 0, "Score: %i", score);
+	al_draw_textf(font36, al_map_rgb(255,0,255), 15, 50, 0, "Moves made: %i", movesMade);
 	
 	//al_draw_bitmap(foreground,0,0,0);
 }
