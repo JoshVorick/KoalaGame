@@ -16,7 +16,9 @@ LeafPuzzle::LeafPuzzle(){
 	al_convert_mask_to_alpha(leafUp, al_map_rgb(255,255,255));
 	rock = al_load_bitmap("Audio and Images/Rock.bmp");
 	al_convert_mask_to_alpha(rock, al_map_rgb(255,255,255));
-	background = al_load_bitmap("Audio and Images/background.bmp");
+	selector = al_load_bitmap("Audio and Images/Selector.bmp");
+	al_convert_mask_to_alpha(selector, al_map_rgb(255,255,255));
+	background = al_load_bitmap("Audio and Images/LeafPuzzleBackground.bmp");
 	omNomNom = al_load_bitmap("Audio and Images/omNomNom.bmp");
 	leafFlipSounds[0] = al_load_sample("Audio and Images/Flip.wav");
 	leafFlipSounds[1] = al_load_sample("Audio and Images/Fwoo.wav");
@@ -27,6 +29,7 @@ LeafPuzzle::LeafPuzzle(){
 
 void LeafPuzzle::Init(int w, int h){		//w is levelNumber, h is score
 	string str;
+	level=w;
 	score = h;
 	/*
 	ifstream openlevels("Levels.txt");
@@ -37,69 +40,28 @@ void LeafPuzzle::Init(int w, int h){		//w is levelNumber, h is score
 	
 	ifstream openfile(str.c_str());
 	*/
-	ifstream openfile("Levels/level1.txt");
-	switch(w)	{
-		case(1):{
-			openfile.close();
-			openfile.open("Levels/level2.txt");
-			break;
-		}
-		case(2):{
-			openfile.close();
-			openfile.open("Levels/level3.txt");
-			break;
-		}
-		case(3):{
-			openfile.close();
-			openfile.open("Levels/level4.txt");
-			break;
-		}
-		case(4):{
-			openfile.close();
-			openfile.open("Levels/level5.txt");
-			break;
-		}
-		case(5):{
-			openfile.close();
-			openfile.open("Levels/level6.txt");
-			break;
-		}
-		case(6):{
-			openfile.close();
-			openfile.open("Levels/level7.txt");
-			break;
-		}
-		case(7):{
-			openfile.close();
-			openfile.open("Levels/level8.txt");
-			break;
-		}
-		case(8):{
-			openfile.close();
-			openfile.open("Levels/level9.txt");
-			break;
-		}
-	}
+	ifstream openfile("Levels/AllLevels.txt");
+	
+	for(int i=0; i<w; i++)
+		getline(openfile,str, 'x');
 	
 	getline(openfile,str, ' ');
 	stringstream convert(str.c_str());
 	convert >> type;
-	
 	getline(openfile,str, ' ');
 	stringstream convert1(str.c_str());
 	convert1 >> numRows;
-	numRows += 2;
-	
 	getline(openfile,str, ' ');
 	stringstream convert2(str.c_str());
 	convert2 >> numCol;
+	numRows += 2;
 	numCol += 2;
 	
 	arraySize = numRows*numCol;
 	
 	for(int i=0; i<numRows; i++)
 		leafStates[i] = 3;
-	for(int i=numRows; i<arraySize-numRows; i++)	{
+	for(int i=numRows; i<arraySize-numRows; i++){
 		if(((i+1) % numRows) < 2)
 			leafStates[i] = 3;
 		else{
@@ -339,13 +301,13 @@ void LeafPuzzle::Render(){
 			int xCorner = xstart + 10 + 70*(selected[i]%numRows) + 34*((int)(floor(selected[i]/numRows))%2);
 			int yCorner = ystart + 30 + 85*((int)(floor(selected[i]/numRows)) % numCol);
 			if (doesWork)
-				al_draw_rectangle(xCorner, yCorner, xCorner + 55, yCorner+ 77, al_map_rgb(0,0,255),8);
+				al_draw_bitmap(selector, xCorner-10, yCorner-20, 0);
 			else
 				al_draw_rectangle(xCorner, yCorner, xCorner + 55, yCorner +77, al_map_rgb(255,0,0), 8);
 		}
 	}
 	al_draw_textf(font36, al_map_rgb(255,0,255), 15, 15, 0, "Score: %i", score);
-	al_draw_textf(font36, al_map_rgb(255,0,255), 15, 50, 0, "Moves made: %i", movesMade);
+	al_draw_textf(font36, al_map_rgb(255,0,255), 15, 50, 0, "Moves made: %i Level: %i", movesMade, level+1);
 	
 	//al_draw_bitmap(foreground,0,0,0);
 }

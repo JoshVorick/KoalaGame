@@ -10,7 +10,6 @@
 #include "Menu.cpp"
 #include "LeafPuzzle.cpp"
 #include "LeafPunch.cpp"
-
 GameState *gameState;
 const int WIDTH = 1280;
 const int HEIGHT = 1000;
@@ -87,7 +86,10 @@ int main(void){
 			if(gameState->getState() != curState && timeAfterWinning > 1)		//Allows graphics to update before game moves on to next state 
 				timeAfterWinning = 0;
 			if(timeAfterWinning == 1){
-				changeState(gameState->getState(), curState);
+				if(levelNumber % 3 == 0)
+					changeState(gameState->getState(), curState);
+				else
+					changeState(LEAF_PUZZLE, curState);
 				al_rest(.2);																									//Small pause so you can see completed stage
 			}
 		}
@@ -149,8 +151,11 @@ int main(void){
 					gameState->Update(E);
 					break;
 				case ALLEGRO_KEY_P:
-					keys[ENTER] = true;
+					keys[P] = true;
 					gameState->setState(MENU);
+					break;
+				case ALLEGRO_KEY_R:
+					changeState(LEAF_PUZZLE, curState);
 					break;
 			}
 		}else if(ev.type == ALLEGRO_EVENT_KEY_UP){
@@ -208,7 +213,7 @@ int main(void){
 		}
 	}
 	al_play_sample(end,1,0,1,ALLEGRO_PLAYMODE_ONCE,NULL);
-	//al_rest(1);
+	al_rest(1);
 	
 	al_destroy_display(display);
 	

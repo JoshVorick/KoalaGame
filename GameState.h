@@ -2,8 +2,7 @@
 #include <allegro5\allegro_primitives.h>
 #include "Menu.h"
 
-class GameState
-{
+class GameState{
 	protected:
 		int state;
 		int score;
