@@ -14,6 +14,12 @@ LeafPunch::LeafPunch(){
 	
 	font36 = al_load_font("Audio and Images/AAJAX.ttf",36,0);
 	
+	treeHit[0] = al_load_sample("Audio and Images/Ugh.wav");
+	treeHit[1] = al_load_sample("Audio and Images/HitTheWood.wav");
+	treeHit[2] = al_load_sample("Audio and Images/KnockOnWood.wav");
+	treeHit[3] = al_load_sample("Audio and Images/Mmm.wav");
+	treeHit[4] = al_load_sample("Audio and Images/MorningWood.wav");
+	
 	tree = al_load_bitmap("Audio and Images/Tree.bmp");
 	al_convert_mask_to_alpha(tree, al_map_rgb(255,255,255));
 	target = al_load_bitmap("Audio and Images/Target.bmp");
@@ -33,6 +39,8 @@ void LeafPunch::Update(int dir){
 
 void LeafPunch::Enter(){
 	double dist = sqrt((mouseX-curX)*(mouseX-curX) + (mouseY-curY)*(mouseY-curY));
+	al_play_sample(treeHit[rand() % 5], 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
+	al_play_sample(treeHit[1], 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
 	if(dist < circleRadius){
 		score += abs(((circleRadius - (dist)) / (timeWaited + 20)) * ((curY - prevY) + (curX - prevX)));
 		treeHealth -= abs((circleRadius - (dist)));

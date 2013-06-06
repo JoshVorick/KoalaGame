@@ -302,7 +302,7 @@ void LeafPuzzle::Enter(){
 				leafStates[selected[i]] = !leafStates[selected[i]];
 		}
 		movesMade++;
-		al_play_sample(leafFlipSounds[rand() % 3], 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
+		al_play_sample(leafFlipSounds[rand() % 4], 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
 		if(hasWon() && state != MENU){
 			state = LEAF_PUNCH;
 			score += 100 * arraySize * type / (movesMade + 2);

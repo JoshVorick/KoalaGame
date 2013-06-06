@@ -16,7 +16,7 @@ class LeafPunch : public GameState{
 	private:
 		int circleRadius, treeWidth, timeWaited, curX, curY, prevX, prevY, treeX, treeHealth;			//treeY is always 0. tree X is its leftmost bound
 		ALLEGRO_BITMAP *tree, *target;
-		ALLEGRO_SAMPLE *treeHit[4];
+		ALLEGRO_SAMPLE *treeHit[5];
 		ALLEGRO_FONT *font36;
 	public:
 		LeafPunch();
