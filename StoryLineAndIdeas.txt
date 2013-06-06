@@ -1,0 +1,55 @@
+Basically, I want this story to be a whole bunch of diferent game types all in one
+like a series of diverse mini-games with a story. I want the story to be crazy. You
+should play Frog Fractions to get an idea of what I mean. Before even trying to add
+to the story, actually, please play FrogFractions. It's great. Anyway, here's what
+I've got thought up so far. If you think something (even if i have code for it already)
+should be omitted or editted, please tell me. I want lots of ideas and fun stuff.
+Thanks! 
+Josh Vorick
+
+You are a koala. you need food. you are too lazy to climb the tress, so instead, you punch them until all the leaves fall off.
+
+Gamestarts with you having to click on targets on the tree to make leaves fall off
+Then, you look up and see no more leaves on that tree, so you go to eat all the leaves that fell
+In comes the puzzle game, an isometric grid of leaves where you have to flip all of them to have a certain sidfe up because you are an OCD as shit koala.
+After eating all the leaves on the ground, you go on to find the next tree.
+Tree punching game and leaf puzzle game alternate (1tree punchin, 5ish puzzle, one tree punching, 5 puzzle)
+See bottom of this document for more details on game design and ideas.
+Then you meet another koala in the forest. You guys decide to team up because he is as fat and lazy as you.
+GAME IDEAS:
+	He punches it while you have to run around catching as many leaves as you can while avoiding sticks and birds and random shit like that.
+	??? idk, that was my only idea...
+Then you look and there are no more leaves in the forest
+...you fatasses...
+so you have to journey on to find a new place of eating/living
+Next game:
+One koala is rolling the other (yes you are that fat) along a path.
+As one koala rolls the other, he becomes tired, but slowly loses weight. As you guys become lighter and more fit, you
+  roll faster (level gets harder)
+You arrive at your destination! It is a koala war camp/battle place
+You join the forces to defend something or another...
+Maybe it is a rebellion against the governing koala who tried to outlaw Eucalyptus consumption?
+Then you go through some training, get some weapons, they should be wtf koala weapons. idk what
+Fighting level!
+Somewhere in their your buddy dies or switches sides and you kill him, idk
+You fight off stuff and become leader of koalas!
+Then, you fall into a hole! oh no!
+But, wait, its a cave! With mushrooms!
+You can't starve, so I guess you have to eat the mushrooms...
+Cue trippy-as-all-fuck-mushroom game!
+Then eventually you get out of the cave---idk what happens next.
+
+
+
+Leaf Puzzle:
+
+TreePunching:
+
+LeafEating with other koala
+
+RoadRolling:
+Press Space to switch koalas
+after each level, each koala loses a certain amount of weight?
+There are obstacles you have to dodge
+As you run, you become tired and have slower reflexes to button presses
+When the other koala is running, you regain energy.
