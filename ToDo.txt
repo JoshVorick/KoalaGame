@@ -1,0 +1,48 @@
++ = add to code
+* = improve code
+! = idea, not for sure
+# = I am a Tweeting faggot
+? = not sure, similar to idea
+XX = done, is in commit, or will be in next one
+
+Menu------------------------------------------------------------------------------------------------------------------
++ background
+* Help Menu
+
+
+LeafPuzzle------------------------------------------------------------------------------------------------------------
++ Add hand that flips leaves (paw flies in from an angle corresponding to which orientation selector is in, leaves start to flip while covered by paw)
+* Change grid to 2D array -> neater, more comprehensive
+* Graphics (animations are yummy)
+* Koala in bottom right
+
+
+TreePunch-------------------------------------------------------------------------------------------------------------
+* Graphics (animations are yummy)
+* target (figure out how to make it fit the rest of the graphics more)
++ hitting multiple in a row starts combo, as combo increases, size and time target is on screen decrease
+? Critters and things on screen to avoid?
+? Wind that pushes your mouse cursor? <-This could make it more intersting, or more unpredictable and piss people off. The wind would have to change slowly
+
+LeafEating with other koala-------------------------------------------------------------------------------------------
+
+RoadRolling-----------------------------------------------------------------------------------------------------------
+! Press Space to switch koalas
+! after each level, each koala loses a certain amount of weight?
+! There are obstacles you have to dodge
+! As you run, you become tired and have slower reflexes to button presses
+! When the other koala is running, you regain energy.
+
+TrippyAss CaveShroom Stage--------------------Play Ski Runner to understand better------------------------------------
+! Run through cave, similar to bit.trip runner or jetpack joyride
+? Need to eat shrooms to live?
+! Three levels of 'high' (sober, buzz, kite) (call something G) decreases over time, increases by const amount per mushroom
+! Combo points for staying 'high' for time. (One combo for staying 'buzzed', one for staying 'kite'. Combos stack)
+! obstacles to jump over/dodge (? stalgmites, stalactites, bats? anything else?)
+! sober graphics are boring, expected from cave.
+! buzzed graphics are more vivid/colorful
+! kite graphics involve hallucinations, lots of changing colors, and ? Mandelbrot Set?
+
+
+
+Misc.-----------------------------------------------------------------------------------------------------------------

@@ -13,7 +13,7 @@ Gamestarts with you having to click on targets on the tree to make leaves fall o
 Then, you look up and see no more leaves on that tree, so you go to eat all the leaves that fell
 In comes the puzzle game, an isometric grid of leaves where you have to flip all of them to have a certain sidfe up because you are an OCD as shit koala.
 After eating all the leaves on the ground, you go on to find the next tree.
-Tree punching game and leaf puzzle game alternate (1tree punchin, 5ish puzzle, one tree punching, 5 puzzle)
+Tree punching game and leaf puzzle game alternate (1 tree punchin, 5ish puzzle, one tree punching, 5 puzzle)
 See bottom of this document for more details on game design and ideas.
 Then you meet another koala in the forest. You guys decide to team up because he is as fat and lazy as you.
 GAME IDEAS:
@@ -40,8 +40,12 @@ Cue trippy-as-all-fuck-mushroom game!
 Then eventually you get out of the cave---idk what happens next.
 
 
-
+SEE TO DO FOR UPDATE VERSION OF BELOW ITEMS!!!!!!!
 Leaf Puzzle:
+Flip leaves all to same orientation. Later levels have different selector (triangle -> rhombus -> trapezoid)
+Can rotate selector
+later on has rocks to block you from flipping (if one of selector is on rocks, none can flip)
+
 
 TreePunching:
 
