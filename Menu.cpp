@@ -13,6 +13,7 @@ Menu::Menu(){
 	y = fontHeight * options/2.0;
 	x = width/2;
 	helpMenu = al_load_bitmap("Audio and Images/HelpMenu.bmp");
+	background = al_load_bitmap("Audio and Images/MenuBackground.bmp");
 }
 
 void Menu::Init(int w, int h){
@@ -49,6 +50,7 @@ void Menu::Enter(){
 }
 
 void Menu::Render(){
+	al_draw_bitmap(background, 0, 0, 0);
 	if(selected == HELP)
 		al_draw_bitmap(helpMenu, 0, 0, 0);
 	int tempY = height/2 - y;

@@ -11,14 +11,14 @@ using namespace std;
 
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
-#include "fallingLeaf.cpp"
+#include "FallingLeaf.cpp"
 #include "math.h"
 #include <allegro5/allegro_primitives.h>
 
 class LeafPunch : public GameState{
 	private:
 		int NUM_LEAVES;
-		int circleRadius, treeWidth, timeWaited, curX, curY, prevX, prevY, treeX, treeHealth;			//treeY is always 0. tree X is its leftmost bound
+		int circleRadius, treeWidth, timeWaited, curX, curY, prevX, prevY, treeX, treeHealth, curCombo;			//treeY is always 0. tree X is its leftmost bound
 		ALLEGRO_BITMAP *tree, *target, *fallingLeaf[2], *background;
 		ALLEGRO_SAMPLE *treeHit[5];
 		ALLEGRO_FONT *font36;

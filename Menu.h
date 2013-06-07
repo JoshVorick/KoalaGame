@@ -26,7 +26,7 @@ class Menu : public GameState{
 		
 		ALLEGRO_FONT *font;
 		ALLEGRO_SAMPLE *clicked;
-		ALLEGRO_BITMAP *helpMenu;
+		ALLEGRO_BITMAP *helpMenu, *background;
 		
 	public:
 		Menu();

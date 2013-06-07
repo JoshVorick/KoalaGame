@@ -12,7 +12,7 @@
 #include "LeafPunch.cpp"
 GameState *gameState;
 const int WIDTH = 1280;
-const int HEIGHT = 1000;
+const int HEIGHT = 720;
 
 void changeState(int newState, int &oldState);
 int levelNumber = 0;

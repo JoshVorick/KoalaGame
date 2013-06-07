@@ -13,7 +13,7 @@ void FallingLeaf::Init(int seed){
 	else
 		leaf = al_load_bitmap("Audio and Images/LeafDown.bmp");
 	al_convert_mask_to_alpha(leaf, al_map_rgb(255,255,255));
-	startX = rand() % 1200 + 20;
+	startX = rand() % 1100 + 160;
 	startY = rand() % 100 - 200;
 	velocity = (rand() % 200) / 100.0 + 3;
 }

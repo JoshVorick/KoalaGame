@@ -6,7 +6,7 @@
 XX = done, is in commit, or will be in next one
 
 Menu------------------------------------------------------------------------------------------------------------------
-+ background
+* background
 * Help Menu
 
 
@@ -20,7 +20,8 @@ LeafPuzzle----------------------------------------------------------------------
 TreePunch-------------------------------------------------------------------------------------------------------------
 * Graphics (animations are yummy)
 * target (figure out how to make it fit the rest of the graphics more)
-+ hitting multiple in a row starts combo, as combo increases, size and time target is on screen decrease
+XXhitting multiple targets in a row starts combo, as combo increases, size and time target is on screen decrease
++ target changes color or a mcircle around it shrinks to indicate how much time is left.
 ? Critters and things on screen to avoid?
 ? Wind that pushes your mouse cursor? <-This could make it more intersting, or more unpredictable and piss people off. The wind would have to change slowly
 
