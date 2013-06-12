@@ -1,6 +1,9 @@
 #pragma once
+
 #include <allegro5\allegro_primitives.h>
-#include "Menu.h"
+
+enum KEYS{UP,DOWN,LEFT,RIGHT,SPACE,ESCAPE,ENTER,P,E,Q};
+enum SELECTED{MENU, LEAF_PUNCH, HELP, EXIT, LEAF_PUZZLE, CAVE_GAME, NONE};
 
 class GameState{
 	protected:
@@ -11,14 +14,15 @@ class GameState{
 		int width;		//initial width that the game is supposed to be played at
 		int height;		//initial height ""
 	public:
-		void virtual Enter(){}
+		void virtual Update(){}
 		void virtual Render(){}
-		void virtual Update(int dir){}
-		void virtual Init(int w, int h){}
+		void virtual Move(int dir){}
+		void virtual Enter(){}
+		void virtual Init(int w, int h, int curLevel, int curScore){}
 		void SetMousePos(int x, int y){mouseX = x; mouseY = y;}
-		//void virtual Destroy();
 		int getState(){return state;}
 		void setState(int newState){state = newState;}
 		int getScore(){return score;}
 		GameState(){state = MENU;}
+		~GameState(){}
 };

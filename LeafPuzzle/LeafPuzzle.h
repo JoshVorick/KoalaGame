@@ -17,15 +17,17 @@ using namespace std;
 class LeafPuzzle : public GameState{
 	private:
 		bool hasWon();
-		//Leaf Puzzle variables
-		int numRows, numCol, theSelected, selected[6], arraySize, type, flipped, doesWork, leafStates[200], movesMade, level;
-		ALLEGRO_BITMAP *leafDown, *leafUp, *background, *omNomNom, *rock, *selector;
+		int numRows, numCol, theSelected, selected[6], arraySize, type, flipped, doesWork, leafStates[200], movesMade, level, 
+			pawTime, pawXCenter, pawYCenter, pawVelX, pawVelY, isPaw, timeToCenter;
+		ALLEGRO_BITMAP *leafDown, *leafUp, *background, *omNomNom, *rock, *selector, *paw;
 		ALLEGRO_SAMPLE *leafFlipSounds[4];
 		ALLEGRO_FONT *font36;
 	public:
 		LeafPuzzle();
-		void Update(int dir);
+		void Update();
+		void Move(int dir);
 		void Render();
 		void Enter();
-		void Init(int w, int h);
+		void Init(int w, int h, int curLevel, int curScore);
+		~LeafPuzzle();
 };

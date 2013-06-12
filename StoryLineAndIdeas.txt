@@ -17,8 +17,8 @@ Tree punching game and leaf puzzle game alternate (1 tree punchin, 5ish puzzle, 
 See bottom of this document for more details on game design and ideas.
 Then you meet another koala in the forest. You guys decide to team up because he is as fat and lazy as you.
 GAME IDEAS:
-	He punches it while you have to run around catching as many leaves as you can while avoiding sticks and birds and random shit like that.
-	??? idk, that was my only idea...
+-He punches it while you have to run around catching as many leaves as you can while avoiding sticks and birds and random shit like that.
+-??? idk, that was my only idea...
 Then you look and there are no more leaves in the forest
 ...you fatasses...
 so you have to journey on to find a new place of eating/living
@@ -27,20 +27,28 @@ One koala is rolling the other (yes you are that fat) along a path.
 As one koala rolls the other, he becomes tired, but slowly loses weight. As you guys become lighter and more fit, you
   roll faster (level gets harder)
 You arrive at your destination! It is a koala war camp/battle place
-You join the forces to defend something or another...
-Maybe it is a rebellion against the governing koala who tried to outlaw Eucalyptus consumption?
-Then you go through some training, get some weapons, they should be wtf koala weapons. idk what
+The koalas here are a part of a rebellion against Koala Hitler!
+After being explained (Through dialogue or  cutscene) about his terrible reign, you join the cause
+Then you go through some training to get koalafied, get some weapons, they should be wtf koala weapons. i.e. pomegranades? 
 Fighting level!
-Somewhere in their your buddy dies or switches sides and you kill him, idk
-You fight off stuff and become leader of koalas!
-Then, you fall into a hole! oh no!
-But, wait, its a cave! With mushrooms!
-You can't starve, so I guess you have to eat the mushrooms...
-Cue trippy-as-all-fuck-mushroom game!
-Then eventually you get out of the cave---idk what happens next.
+You are fighting with buddies in battle until you push  Koala Hitler's forces back into the capital.
+You get promoted to (insert pun here) and get to lead the charge on the capital
+It is like a reverse TD, you choose which types of troops go in and they try to make it past hitler's defenses.
+You fail, and get sent to some adventure map or something to wait.
+Then you try agian and fail again.
+You find out how dangerously weak the rebelling army is getting.
+On ther next adventure map, you fall into a cave.
+Cue trippy cave stage.
+At the end of this stage, you find a weapon of mass destruction
+You use it against koala hitler. It is like a nuke and nothing is left.
+You find a video/book/something. Maybe there is a cutscene.
+The player finds out that the old president/leader was actually really great, but the rebel leader was the real hitler.
+He used propaganda and stuff like that to put everyone against the other guy.
+Depressing/sad stage? gray color scheme sad music, no idea what gameplay woul be like...
+then...idk what's next.
 
 
-SEE TO DO FOR UPDATE VERSION OF BELOW ITEMS!!!!!!!
+SEE ToDo.txt FOR UPDATE VERSION OF BELOW ITEMS!!!!!!!----------------------------------------------------------
 Leaf Puzzle:
 Flip leaves all to same orientation. Later levels have different selector (triangle -> rhombus -> trapezoid)
 Can rotate selector

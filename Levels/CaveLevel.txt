@@ -1,0 +1,23 @@
+1500 
+stalactites~7 110 200 400 470 1130 1190 1501 
+stalagmites~8 10 130 300 450 550 800 1160 1501 
+bats~5 130 300 440 565 1501 
+mushrooms~11 3 100 170 310 460 500 660 780 800 1000 1501 
+?~0 1501 
+?~0 1501 
+?~0 1501 
+?~0 1501 
+?~0 1501 
+?~0 1501 
+
+DIRECTIONS!
+time = seconds * 60
+the type of object, then tilde (~) then total number of that object that will appear in the level (50 max)
+then space
+then time first object of this type appears
+then space
+then time second object of this type appears
+.
+.
+.
+time +1 should be last object's time

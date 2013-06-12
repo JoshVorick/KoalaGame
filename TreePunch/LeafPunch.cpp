@@ -34,11 +34,26 @@ LeafPunch::LeafPunch(){
 	prevY = curY = rand() % (treeWidth - circleRadius) + circleRadius;
 }
 
-void LeafPunch::Init(int w, int h){ //w = level, h = score
-	score = h;
+void LeafPunch::Update(){
+	timeWaited++;
+	if(timeWaited > circleRadius * 25 / (curCombo+1)){
+		curCombo = 0;
+		timeWaited = 0;
+		circleRadius = 50 - (2*curCombo);
+		curX = rand() % (treeWidth - (2*circleRadius)) + treeX + circleRadius;
+		curY = rand() % (height - (2*circleRadius)) + circleRadius;
+		circleRadius = 50 - (2*curCombo);
+	}
+
 }
 
-void LeafPunch::Update(int dir){}
+void LeafPunch::Init(int w, int h, int curLevel, int curScore){ //w = level, h = score
+	width = w;
+	height = h;
+	score = curScore;
+}
+
+void LeafPunch::Move(int dir){}
 
 void LeafPunch::Enter(){
 	double dist = sqrt((mouseX-curX)*(mouseX-curX) + (mouseY-curY)*(mouseY-curY));
@@ -72,22 +87,13 @@ void LeafPunch::Enter(){
 	if(treeHealth <= 0)
 		state = LEAF_PUZZLE;
 	else if(dist < circleRadius){
-		curX = rand() % (treeWidth - circleRadius) + treeX + circleRadius;
-		curY = rand() % (treeWidth - circleRadius) + circleRadius;
+		curX = rand() % (treeWidth - (2*circleRadius)) + treeX + circleRadius;
+		curY = rand() % (height - (2*circleRadius)) + circleRadius;
 		timeWaited = 0;
 	}
 }
 
 void LeafPunch::Render(){
-	timeWaited++;
-	if(timeWaited > circleRadius * 25 / (curCombo+1)){
-		curCombo = 0;
-		timeWaited = 0;
-		circleRadius = 50 - (2*curCombo);
-		curX = rand() % (treeWidth - circleRadius) + treeX + circleRadius;
-		curY = rand() % (500 - circleRadius) + circleRadius;
-		circleRadius = 50 - (2*curCombo);
-	}
 	int timeLeft = circleRadius * 25 / (curCombo+1) - timeWaited;
 	al_draw_bitmap(background, 0, 0, 0);
 	al_draw_bitmap(tree, treeX, 0, 0);
@@ -99,12 +105,12 @@ void LeafPunch::Render(){
 		if(isFalling[i])
 			leaves[i]->Render();
 	double dist = sqrt((mouseX-curX)*(mouseX-curX) + (mouseY-curY)*(mouseY-curY));
-	al_draw_textf(font36, al_map_rgb(255,0,255), 5, 5, 0, "Score: %i Time: %i", score, timeWaited);
+	al_draw_textf(font36, al_map_rgb(255,0,255), 5, 5, 0, "Score: %i", score);
 	int scor = abs(((50 - (dist)) / (timeWaited + 20)) * ((curY - prevY) + (curX - prevX)));
 	int health = abs((50 - (dist)));
-	al_draw_textf(font36, al_map_rgb(255,0,255), 5, 70, 0, "Score for click: %i Tree health for hit: %i", scor, health);
-	al_draw_textf(font36, al_map_rgb(255,0,255), 5, 110, 0, "COMBO: %i", curCombo);
-	al_draw_textf(font36, al_map_rgb(255,0,255), 5, 150, 0, "ComboTime left: %i", timeLeft);
+	//al_draw_textf(font36, al_map_rgb(255,0,255), 5, 70, 0, "Score for click: %i Tree health for hit: %i", scor, health);
+	al_draw_textf(font36, al_map_rgb(255,0,255), 5, 70, 0, "COMBO: %i", curCombo);
+	//al_draw_textf(font36, al_map_rgb(255,0,255), 5, 150, 0, "ComboTime left: %i", timeLeft);
 	al_draw_rectangle(5, 50, 505, 70, al_map_rgb(100,100,100), 3);
 	al_draw_filled_rectangle(5, 50, 505 - treeHealth, 70, al_map_rgb(0,255,0));
 }

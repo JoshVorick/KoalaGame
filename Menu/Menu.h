@@ -1,8 +1,5 @@
 #pragma once
 
-enum KEYS{UP,DOWN,LEFT,RIGHT,SPACE,ESCAPE,ENTER,P,E};
-enum SELECTED{MENU, LEAF_PUNCH, HELP, EXIT, LEAF_PUZZLE, NONE};
-
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
@@ -11,7 +8,6 @@ enum SELECTED{MENU, LEAF_PUNCH, HELP, EXIT, LEAF_PUZZLE, NONE};
 #include <allegro5/allegro_acodec.h>
 #include <string>
 #include "math.h"
-#include "GameState.h"
 using namespace std;
 
 class Menu : public GameState{
@@ -30,10 +26,9 @@ class Menu : public GameState{
 		
 	public:
 		Menu();
+		void Update();
 		void Enter();
 		void Render();
-		void Update(int dir);
-		void Init(int w, int h);
-		//void Destroy(){}
-	
+		void Move(int dir);
+		void Init(int w, int h, int curLevel, int curScore);	
 };

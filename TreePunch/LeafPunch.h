@@ -26,8 +26,10 @@ class LeafPunch : public GameState{
 		bool isFalling[100];
 	public:
 		LeafPunch();
-		void Update(int dir);
+		void Update();
+		void Move(int dir);
 		void Render();
 		void Enter();
-		void Init(int w, int h);
+		void Init(int w, int h, int curLevel, int curScore);
+		~LeafPunch();
 };
