@@ -4,122 +4,126 @@
 
 CaveGame::CaveGame(){
 	koalaY = 100;
-	koalaV = 0;
+	koalaVx = 0;
+	koalaVy = 0;
 	ceilY = 100;
 	state = CAVE_GAME;
-	gravity = 75;
 	intoxication = 0;
+	health = 450;
 	time = 0;
 	koalaX = 100;
 	floorY = 800;
 	caveSpeed = -10;
-	koala = al_load_bitmap("Audio and Images/Koala.bmp");
-	al_convert_mask_to_alpha(koala, al_map_rgb(255,255,255));
-	objImage[0][0] = al_load_bitmap("Audio and Images/Stalactite.bmp");
-	al_convert_mask_to_alpha(objImage[0][0], al_map_rgb(255,255,255));
-	objY[0] = ceilY;
-	objV[0] = caveSpeed;
-	objFrames[0][0] = 1;
-	objImage[1][0] = al_load_bitmap("Audio and Images/Stalagmite.bmp");
-	al_convert_mask_to_alpha(objImage[1][0], al_map_rgb(255,255,255));
-	objY[1] = floorY - al_get_bitmap_height(objImage[1][0]);
-	objV[1] = caveSpeed;
-	objFrames[1][0] = 1;
-	objImage[2][0] = al_load_bitmap("Audio and Images/Bat.bmp");
-	al_convert_mask_to_alpha(objImage[2][0], al_map_rgb(255,255,255));
-	objY[2] = ceilY + 300;
-	objV[2] = caveSpeed - 5;
-	objFrames[2][0] = 1;
-	objImage[3][0] = al_load_bitmap("Audio and Images/Mushroom.bmp");
-	al_convert_mask_to_alpha(objImage[3][0], al_map_rgb(255,255,255));
-	objY[3] = floorY - al_get_bitmap_height(objImage[3][0]);
-	objV[3] = caveSpeed;
-	objFrames[3][0] = 1;
-	koala = al_load_bitmap("Audio and Images/Koala.bmp");
-	al_convert_mask_to_alpha(koala, al_map_rgb(255,255,255));
-	objImage[0][1] = al_load_bitmap("Audio and Images/Stalactite1.bmp");
-	al_convert_mask_to_alpha(objImage[0][1], al_map_rgb(255,255,255));
-	objFrames[0][1] = 20;
-	objImage[1][1] = al_load_bitmap("Audio and Images/Stalagmite.bmp");
-	al_convert_mask_to_alpha(objImage[1][1], al_map_rgb(255,255,255));
-	objFrames[1][1] = 1;
-	objImage[2][1] = al_load_bitmap("Audio and Images/Bat.bmp");
-	al_convert_mask_to_alpha(objImage[2][1], al_map_rgb(255,255,255));
-	objFrames[2][1] = 1;
-	objImage[3][1] = al_load_bitmap("Audio and Images/Mushroom.bmp");
-	al_convert_mask_to_alpha(objImage[3][1], al_map_rgb(255,255,255));
-	objFrames[3][1] = 1;
 	for(int i=0;i<10;i++)
-		for(int k=0;k<8;k++)
-			obstacles[i][k] = new CaveObject();
+		objVy[i] = 0;
+	caveBackground = al_load_bitmap("Audio and Images/CaveBackground.bmp");
+	koala = al_load_bitmap("Audio and Images/Koala.bmp");
+	al_convert_mask_to_alpha(koala, al_map_rgb(255,255,255));
+	objImage[0][0] = al_load_bitmap("Audio and Images/GoodMushroom.bmp");
+	objVx[0] = caveSpeed;
+	objFrames[0][0] = 1;
+	objFreq[0] = 150;
+	objImage[0][1] = al_load_bitmap("Audio and Images/GoodMushroom1.bmp");
+	objFrames[0][1] = 20;
+	objImage[1][0] = al_load_bitmap("Audio and Images/BadMushroom.bmp");
+	objVx[1] = caveSpeed;
+	objFrames[1][0] = 1;
+	objFreq[1] = 150;
+	objImage[1][1] = al_load_bitmap("Audio and Images/BadMushroom1.bmp");
+	objFrames[1][1] = 20;
+	objImage[2][0] = al_load_bitmap("Audio and Images/IntoxMushroom.bmp");
+	objVx[2] = caveSpeed;
+	objFrames[2][0] = 1;
+	objFreq[2] = 150;
+	objImage[2][1] = al_load_bitmap("Audio and Images/IntoxMushroom1.bmp");
+	objFrames[2][1] = 20;
+	objImage[3][0] = al_load_bitmap("Audio and Images/Bat.bmp");
+	objVx[3] = caveSpeed - 5;
+	objFrames[3][0] = 1;
+	objFreq[3] = 120;
+	objImage[3][1] = al_load_bitmap("Audio and Images/Bat1.bmp");
+	objFrames[3][1] = 3;
+	objImage[4][0] = al_load_bitmap("Audio and Images/Stalagmite.bmp");
+	objVx[4] = caveSpeed;
+	objFrames[4][0] = 1;
+	objFreq[4] = 180;
+	objImage[4][1] = al_load_bitmap("Audio and Images/Stalagmite1.bmp");
+	objFrames[4][1] = 20;
+	
+	for(int i=0;i<5;i++){
+		for(int k=0;k<2;k++){
+			al_convert_mask_to_alpha(objImage[i][k], al_map_rgb(255,255,255));			
+			objW[i][k] = al_get_bitmap_width(objImage[i][k]) / objFrames[i][k];
+			objH[i][k] = al_get_bitmap_height(objImage[i][k]);
+		}
+	}
 	for(int i=0; i<10;i++)
 		for(int k=0;k<8;k++)
 			isObj[i][k] = false;
 }
 
-void CaveGame::Init(int w, int h, int curLevel, int curSccore){
+void CaveGame::Init(int w, int h, int curLevel, int curScore){
 	string str;
 	width = w;
 	height = h;
 	koalaHeight = al_get_bitmap_height(koala);
 	koalaWidth = al_get_bitmap_width(koala);
 	
-	ifstream openfile("Levels/CaveLevel.txt");
-	getline(openfile,str,' ');
-	stringstream convert(str.c_str());
-	convert >> timeDone;
-	int total;
-	for(int i=0;i<10;i++){
-		getline(openfile,str,'~');
-		getline(openfile,str,' ');
-		stringstream convert1(str.c_str());
-		convert1 >> total;
-		for(int k=0; k<total; k++){
-			getline(openfile,str,' ');
-			stringstream convert2(str.c_str());
-			convert2 >> objTime[i][k];
-		}
-		numObj[i] = 0;
-	}
-	openfile.close();
 }
 
 void CaveGame::Update(){
+	time++;
 	if(intoxication > 0)
 		intoxication -= 1;
-	if(koalaY >= (floorY - koalaHeight) && koalaV > 0){
-		koalaV = 0;
-		koalaY = floorY - koalaHeight;
-	}
-	if(koalaY < floorY - koalaHeight)
-		koalaV += gravity/60;
-	koalaY += koalaV;
-	time++;
-	for(int i=0;i<10;i++){
-		if(time == objTime[i][numObj[i]] && time < timeDone){
+	koalaX += koalaVx;
+	koalaY += koalaVy;
+	if(koalaY < 0)
+		koalaY=0;
+	if(koalaY > height - koalaHeight)
+		koalaY = height - koalaHeight;
+	if(koalaX < 0)
+		koalaX = 0;
+	koalaVy /= 1.2;
+	koalaVx /= 1.2;
+	if(health < 1)
+		state = MENU;
+	for(int i=0;i<5;i++){
+		if(rand() % objFreq[i] == 0){
+			objFreq[i] += 100;
+			health-=3;
 			for(int k=0; k<8;k++){
 				if(!isObj[i][k]){
-					obstacles[i][k]->Init(width, objY[i], objV[i], 0, al_get_bitmap_height(objImage[i][0]), al_get_bitmap_width(objImage[i][0]));
+					objX[i][k] = width;
+					objY[i][k] = rand() % (height - objH[i][0]);
 					isObj[i][k] = true;
-					numObj[i]++;
 					break;
 				}
 			}
 		}
+		else
+			objFreq[i]--;
 		for(int k=0; k<8;k++){
 			if(isObj[i][k]){
-				obstacles[i][k]->Update();
-				if(obstacles[i][k]->Collides(koalaX+50, koalaX + koalaWidth-30, koalaY+5, koalaY + koalaHeight)){
-					if(i == 3){
-						intoxication += 300;
-						isObj[3][k] = false;
-						if(intoxication > 600)
-							intoxication = 599;
-					}else{
+				objX[i][k] += objVx[i];
+				objY[i][k] += objVy[i];
+				if(objX[i][k] < koalaX + koalaWidth - 40 && objX[i][k] + objW[i][0] > koalaX + 50 && objY[i][k] < koalaY + koalaHeight && objY[i][k] + objH[i][0] > koalaY + 5){
+					if(i > 2){
 						state = MENU;
+					}else if(i==0){
+						health += 300;
+					}else if(i==1){
+						health -= 200;
+						intoxication += 50;
+					}else if(i==2){
+						intoxication += 250;
 					}
+					if(intoxication > 600)
+						intoxication = 599;
+					if(health > 600)
+						health = 600;
+					isObj[i][k] = false;
 				}
-				if(obstacles[i][k]->getRightBound() < 0)
+				if(objX[i][k] + objW[i][0] < 0)
 					isObj[i][k] = false;
 			}
 		}
@@ -127,24 +131,39 @@ void CaveGame::Update(){
 }
 
 void CaveGame::Enter(){
-	if(koalaY >= floorY - koalaHeight)
-		koalaV -= 30;
 }
 
 void CaveGame::Move(int dir){
-
+	if(dir == UP){
+		koalaVy = -14;
+	}else if(dir == DOWN){
+		koalaVy = 14;
+	}else if(dir == LEFT){
+		koalaVx = -14;
+	}else if(dir == RIGHT){
+		koalaVx = 7;
+	}
 }
 
 void CaveGame::Render(){
+	al_draw_bitmap(caveBackground,0,0,0);
 	al_draw_bitmap(koala, koalaX, koalaY, 0);
 	for(int i=0; i<10;i++)
 		for(int k=0;k<8;k++)
-			if(isObj[i][k])
-				obstacles[i][k]->Render(objImage[i][(int)(intoxication/300) % 2], (time/3) % objFrames[i][(int)(intoxication/300) % 2]);
-
-	al_draw_filled_rectangle(0,0,width,ceilY,al_map_rgb(64,64,64));
-	al_draw_filled_rectangle(0,floorY,width,height,al_map_rgb(64,64,64));
-	al_draw_filled_rectangle(0,0, intoxication, 10, al_map_rgb(200,50,200));
+			if(isObj[i][k]){
+				int numImage = (int)(intoxication/300) % 2;
+				al_draw_bitmap_region(objImage[i][numImage], objW[i][numImage] * ((time/3) % objFrames[i][numImage]), 0, objW[i][numImage], objH[i][numImage], objX[i][k], objY[i][k], 0);
+			}
+	al_draw_rectangle(1,1,600,49,al_map_rgb(10,200,10),2);
+	al_draw_filled_rectangle(2,2,health-2, 50, al_map_rgb(0,220,0));
+	if(intoxication <= 300)
+		al_draw_filled_rectangle(2,54, intoxication, 98, al_map_rgb(200,50,200));
+	else{
+		al_draw_rectangle(1,53,299,69,al_map_rgb(180,70,180),2);
+		al_draw_rectangle(1,73,299,109,al_map_rgb(180,70,180),2);
+		al_draw_filled_rectangle(2,54, 298, 68, al_map_rgb(200,50,200));
+		al_draw_filled_rectangle(2,74, intoxication-300 - 2, 110, al_map_rgb(200,50,200));
+	}
 }
 
 CaveGame::~CaveGame(){
@@ -152,5 +171,4 @@ CaveGame::~CaveGame(){
 	for(int i=0;i<10;i++)
 		al_destroy_bitmap(objImage[i][0]);
 	al_destroy_bitmap(koala);
-	delete obstacles;
 }

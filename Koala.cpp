@@ -14,18 +14,20 @@
 #include "CaveGame/CaveGame.cpp"
 
 GameState *gameState;
-const int WIDTH = 1280;
-const int HEIGHT = 1000;
+const int WIDTH = 1920;
+const int HEIGHT = 1080;
 
 void changeState(int newState, int &oldState);
 int levelNumber = 0;
 int koalaSize = 0;
 
+bool keys[] = {false,false,false,false,false,false,false};
+int timeSinceDown[] = {0,0,0,0,0,0,0};
+
 int main(void){
 	//PRIMITIVES==============
 	bool done = false;
 	bool redraw = true;
-	bool keys[] = {false,false,false,false,false,false,false};
 	int curState = MENU;
 	int timeAfterWinning = 10;
 	int windowWidth = WIDTH;
@@ -87,6 +89,13 @@ int main(void){
 		
 		if(ev.type == ALLEGRO_EVENT_TIMER){				//Next sixtieth of a second
 			gameState->Update();
+			for(int i=UP;i<Q+1;i++){
+				if(keys[i]){
+					timeSinceDown[i]++;
+					if(timeSinceDown[i] > 20 || curState == CAVE_GAME)
+						gameState->Move(i);
+				}
+			}
 			redraw = true;
 			timeAfterWinning++;
 			if(gameState->getState() != curState && timeAfterWinning > 1)		//Allows graphics to update before game moves on to next state 
@@ -239,6 +248,10 @@ int main(void){
 
 void changeState(int newState, int &oldState){
 	int tempScore = gameState->getScore();
+	for(int i=UP;i<ESCAPE;i++){
+		keys[i] = false;
+		timeSinceDown[i] = 0;
+	}
 	if(newState == LEAF_PUZZLE){
 		delete gameState;
 		gameState = new LeafPuzzle();
