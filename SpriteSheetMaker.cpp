@@ -13,7 +13,7 @@ int main(void)
 	int imageWidth = 0;
 	int imageHeight = 0;
 	
-	const int arraySize = 2;
+	const int arraySize = 20;
 	
 	
 	//Allegro vars========
@@ -29,7 +29,7 @@ int main(void)
 	
 	al_init_image_addon();
 	
-	images[0] = al_load_bitmap("Audio and Images/Bat.bmp");
+	images[0] = al_load_bitmap("Audio and Images/IntoxMushroom.bmp");
 	
 	imageWidth = al_get_bitmap_width(images[0]);
 	imageHeight = al_get_bitmap_height(images[0]);
@@ -44,7 +44,7 @@ int main(void)
 		al_draw_bitmap(images[0], i*imageWidth, 0, 0);
 	}
 	
-	al_save_bitmap("Bat1.bmp", outImage);
+	al_save_bitmap("IntoxMushroom1.bmp", outImage);
 	
 	al_set_target_bitmap(al_get_backbuffer(display));
 	

@@ -105,7 +105,7 @@ int main(void){
 					changeState(gameState->getState(), curState);
 				else
 					changeState(LEAF_PUZZLE, curState);
-				al_rest(.2);																									//Small pause so you can see completed stage
+				al_rest(.4);																									//Small pause so you can see completed stage
 			}
 		}
 		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE){	//Red 'X' is clicked
