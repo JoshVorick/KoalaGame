@@ -9,9 +9,9 @@ using namespace std;
 
 class CaveGame : public GameState{
 	private:
-		int intoxication, health, koalaX, floorY, ceilY, koalaHeight, koalaWidth, t, caveSpeed, objW[10][3], objH[10][3], 
+		int intoxication, health, koalaX, floorY, ceilY, koalaHeight, koalaWidth, t, objW[10][3], objH[10][3], numOnScreen[10], 
 			objFreq[10], objFrames[10][3]; //10 types of obj, max of 50 per level
-		float koalaVx, koalaVy, koalaY, objX[10][8], objY[10][8], objVx[10], objVy[10];
+		float caveSpeed, koalaVx, koalaVy, koalaY, objX[10][8], objY[10][8], objVx[10], objVy[10];
 		bool isObj[10][8];	//10 object types, 8 on screen at a time
 		ALLEGRO_BITMAP *caveBackground, *koala, *objImage[10][3];	//10 images for the 10 different objects
 		//0 is for stalactite. 1 is for stalagmite. 2 is bat.

@@ -18,59 +18,69 @@ CaveGame::CaveGame(){
 	for(int i=0;i<10;i++)
 		objVy[i] = 0;
 	caveBackground = al_load_bitmap("Audio and Images/CaveBackground.bmp");
-	koala = al_load_bitmap("Audio and Images/Koala.bmp");
+	koala = al_load_bitmap("Audio and Images/KoalaCave.bmp");
 	al_convert_mask_to_alpha(koala, al_map_rgb(255,255,255));
 	objImage[0][0] = al_load_bitmap("Audio and Images/GoodMushroom.bmp");
-	objVx[0] = caveSpeed;
+	objVx[0] = 0;
 	objFrames[0][0] = 1;
-	objFreq[0] = 250;
+	objFreq[0] = 100;
 	objImage[0][1] = al_load_bitmap("Audio and Images/GoodMushroom1.bmp");
 	objFrames[0][1] = 20;
-	objImage[0][2] = al_load_bitmap("Audio and Images/GoodMushroom2.bmp");
-	objFrames[0][2] = 20;
+	objImage[0][2] = al_load_bitmap("Audio and Images/GoodMushroom1.bmp");
+	objFrames[0][2] = 21;
 	objImage[1][0] = al_load_bitmap("Audio and Images/BadMushroom.bmp");
-	objVx[1] = caveSpeed;
+	objVx[1] = 0;
 	objFrames[1][0] = 1;
-	objFreq[1] = 150;
+	objFreq[1] = 50;
 	objImage[1][1] = al_load_bitmap("Audio and Images/BadMushroom1.bmp");
 	objFrames[1][1] = 20;
-	objImage[1][2] = al_load_bitmap("Audio and Images/BadMushroom2.bmp");
-	objFrames[1][2] = 20;
+	objImage[1][2] = al_load_bitmap("Audio and Images/BadMushroom1.bmp");
+	objFrames[1][2] = 21;
 	objImage[2][0] = al_load_bitmap("Audio and Images/IntoxMushroom.bmp");
-	objVx[2] = caveSpeed;
+	objVx[2] = 0;
 	objFrames[2][0] = 1;
-	objFreq[2] = 150;
+	objFreq[2] = 20;
 	objImage[2][1] = al_load_bitmap("Audio and Images/IntoxMushroom1.bmp");
 	objFrames[2][1] = 20;
-	objImage[2][2] = al_load_bitmap("Audio and Images/IntoxMushroom2.bmp");
-	objFrames[2][2] = 20;
+	objImage[2][2] = al_load_bitmap("Audio and Images/IntoxMushroom1.bmp");
+	objFrames[2][2] = 21;
 	objImage[3][0] = al_load_bitmap("Audio and Images/Bat.bmp");
-	objVx[3] = caveSpeed - 5;
+	objVx[3] = -5;
 	objFrames[3][0] = 1;
-	objFreq[3] = 100;
+	objFreq[3] = 40;
 	objImage[3][1] = al_load_bitmap("Audio and Images/Bat1.bmp");
 	objFrames[3][1] = 20;
-	objImage[3][2] = al_load_bitmap("Audio and Images/Bat2.bmp");
-	objFrames[3][2] = 20;
+	objImage[3][2] = al_load_bitmap("Audio and Images/Bat1.bmp");
+	objFrames[3][2] = 21;
 	objImage[4][0] = al_load_bitmap("Audio and Images/Stalagmite.bmp");
-	objVx[4] = caveSpeed;
+	objVx[4] = 0;
 	objFrames[4][0] = 1;
-	objFreq[4] = 150;
+	objFreq[4] = 60;
 	objImage[4][1] = al_load_bitmap("Audio and Images/Stalagmite1.bmp");
 	objFrames[4][1] = 20;
-	objImage[4][2] = al_load_bitmap("Audio and Images/Stalagmite2.bmp");
-	objFrames[4][2] = 20;
+	objImage[4][2] = al_load_bitmap("Audio and Images/Stalagmite1.bmp");
+	objFrames[4][2] = 21;
+	
+	string str;
+	ifstream openfile("Levels/CaveFrequencies.txt");
+	for(int i=0;i<5;i++){
+		getline(openfile, str, ' ');
+		stringstream convert(str.c_str());
+		convert >> objFreq[i];
+	}
 	
 	for(int i=0;i<5;i++){
+		numOnScreen[i] = 0;
 		for(int k=0;k<3;k++){
 			al_convert_mask_to_alpha(objImage[i][k], al_map_rgb(255,255,255));			
 			objW[i][k] = al_get_bitmap_width(objImage[i][k]) / objFrames[i][k];
 			objH[i][k] = al_get_bitmap_height(objImage[i][k]);
 		}
 	}
-	for(int i=0; i<10;i++)
+	for(int i=0; i<10;i++){
 		for(int k=0;k<8;k++)
 			isObj[i][k] = false;
+	}
 }
 
 void CaveGame::Init(int w, int h, int curLevel, int curScore){
@@ -84,6 +94,7 @@ void CaveGame::Init(int w, int h, int curLevel, int curScore){
 
 void CaveGame::Update(){
 	t++;
+	caveSpeed -= 0.002;
 	if(intoxication > 0)
 		intoxication -= 1;
 	koalaX += koalaVx;
@@ -99,23 +110,25 @@ void CaveGame::Update(){
 	if(health < 1)
 		state = MENU;
 	for(int i=0;i<5;i++){
-		if(rand() % objFreq[i] == 0){
+		if(rand() % (objFreq[i] * (numOnScreen[i]+1)) == 0){
 			health-=3;
 			for(int k=0; k<8;k++){
 				if(!isObj[i][k]){
 					objX[i][k] = width;
 					objY[i][k] = rand() % (height - objH[i][0]);
 					isObj[i][k] = true;
+					numOnScreen[i]++;
 					break;
 				}
 			}
 		}
 		for(int k=0; k<8;k++){
 			if(isObj[i][k]){
-				objX[i][k] += objVx[i];
+				objX[i][k] += objVx[i]+ caveSpeed;
 				objY[i][k] += objVy[i];
-				if(objX[i][k] < koalaX + koalaWidth - 40 && objX[i][k] + objW[i][0] > koalaX + 50 && objY[i][k] < koalaY + koalaHeight && objY[i][k] + objH[i][0] > koalaY + 5){
+				if(objX[i][k] < koalaX + koalaWidth - 20 && objX[i][k] + objW[i][0] > koalaX  + 20 && objY[i][k] < koalaY + koalaHeight -20 && objY[i][k] + objH[i][0] > koalaY + 20){
 					isObj[i][k] = false;
+					numOnScreen[i]--;
 					if(i > 2){
 						state = MENU;
 						isObj[i][k] = true;
@@ -125,15 +138,17 @@ void CaveGame::Update(){
 						health -= 200;
 						intoxication += 50;
 					}else if(i==2){
-						intoxication += 250;
+						intoxication += 175;
 					}
 					if(intoxication >= 900)
 						intoxication = 899;
 					if(health > 600)
 						health = 600;
 				}
-				if(objX[i][k] + objW[i][0] < 0)
+				if(objX[i][k] + objW[i][0] < 0){
 					isObj[i][k] = false;
+					numOnScreen[i]--;
+				}
 			}
 		}
 	}
@@ -144,9 +159,9 @@ void CaveGame::Enter(){
 
 void CaveGame::Move(int dir){
 	if(dir == UP){
-		koalaVy = -14;
+		koalaVy = -8;
 	}else if(dir == DOWN){
-		koalaVy = 14;
+		koalaVy = 8;
 	}else if(dir == LEFT){
 		koalaVx = -14;
 	}else if(dir == RIGHT){

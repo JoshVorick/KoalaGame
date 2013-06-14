@@ -180,39 +180,51 @@ int main(void){
 			switch(ev.keyboard.keycode){
 				case ALLEGRO_KEY_UP:
 					keys[UP] = false;
+					timeSinceDown[UP] = 0;
 					break;
 				case ALLEGRO_KEY_DOWN:
 					keys[DOWN] = false;
+					timeSinceDown[DOWN] = 0;
 					break;
 				case ALLEGRO_KEY_LEFT:
 					keys[LEFT] = false;
+					timeSinceDown[LEFT] = 0;
 					break;
 				case ALLEGRO_KEY_RIGHT:
 					keys[RIGHT] = false;
+					timeSinceDown[RIGHT] = 0;
 					break;
 				case ALLEGRO_KEY_W:
 					keys[UP] = false;
+					timeSinceDown[UP] = 0;
 					break;
 				case ALLEGRO_KEY_S:
 					keys[DOWN] = false;
+					timeSinceDown[DOWN] = 0;
 					break;
 				case ALLEGRO_KEY_A:
 					keys[LEFT] = false;
+					timeSinceDown[LEFT] = 0;
 					break;
 				case ALLEGRO_KEY_D:
 					keys[RIGHT] = false;
+					timeSinceDown[RIGHT] = 0;
 					break;
 				case ALLEGRO_KEY_SPACE:
 					keys[SPACE] = false;
+					timeSinceDown[SPACE] = 0;
 					break;
 				case ALLEGRO_KEY_ENTER:
 					keys[ENTER] = false;
+					timeSinceDown[ENTER] = 0;
 					break;
 				case ALLEGRO_KEY_Q:
 					keys[SPACE] = false;
+					timeSinceDown[SPACE] = 0;
 					break;
 				case ALLEGRO_KEY_E:
 					keys[ENTER] = false;
+					timeSinceDown[UP] = 0;
 					break;
 			}
 		}else if(ev.type == ALLEGRO_EVENT_MOUSE_AXES){

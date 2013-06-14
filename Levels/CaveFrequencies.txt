@@ -1,0 +1,7 @@
+100 80 35 20 50 
+
+GoodMush 
+BadMush 
+IntoxMush 
+Bat 
+Stalag
