@@ -114,3 +114,13 @@ void LeafPunch::Render(){
 	al_draw_rectangle(5, 50, 505, 70, al_map_rgb(100,100,100), 3);
 	al_draw_filled_rectangle(5, 50, 505 - treeHealth, 70, al_map_rgb(0,255,0));
 }
+
+LeafPunch::~LeafPunch(){
+	al_destroy_bitmap(tree);
+	al_destroy_bitmap(target);
+	al_destroy_bitmap(fallingLeaf[0]);
+	al_destroy_bitmap(fallingLeaf[1]);
+	al_destroy_bitmap(background);
+	al_destroy_font(font36);
+	delete[] fallingLeaf;
+}

@@ -46,8 +46,8 @@ int main(void){
 	//Initializers
 	if(!al_init()) return -1;
 	
-	display = al_create_display(WIDTH, HEIGHT);							//Initialize before flags to make window start at desired size instead of at most recent size
 	al_set_new_display_flags(ALLEGRO_RESIZABLE);
+	//al_set_new_display_flags(ALLEGRO_FULLSCREEN);
 	display = al_create_display(WIDTH, HEIGHT);
 	al_set_window_position(display, 0, 0);
 	al_set_window_title(display, "MOTHERTRUCKING KOALAGAME");
@@ -89,24 +89,24 @@ int main(void){
 		
 		if(ev.type == ALLEGRO_EVENT_TIMER){				//Next sixtieth of a second
 			gameState->Update();
-			for(int i=UP;i<Q+1;i++){
+			for(int i=UP;i<ENTER+1;i++){
 				if(keys[i]){
 					timeSinceDown[i]++;
-					if(timeSinceDown[i] > 20 || curState == CAVE_GAME)
+					if(timeSinceDown[i] > 60 || curState == CAVE_GAME)
 						gameState->Move(i);
 				}
 			}
 			redraw = true;
-			timeAfterWinning++;
-			if(gameState->getState() != curState && timeAfterWinning > 1)		//Allows graphics to update before game moves on to next state 
-				timeAfterWinning = 0;
 			if(timeAfterWinning == 1){
 				if(levelNumber % 3 == 0)
 					changeState(gameState->getState(), curState);
 				else
 					changeState(LEAF_PUZZLE, curState);
-				al_rest(.4);																									//Small pause so you can see completed stage
+				al_rest(.4);							//Small pause so you can see completed stage
+				timeAfterWinning++;
 			}
+			if(gameState->getState() != curState && timeAfterWinning > 1)		//Allows graphics to update before game moves on to next state 
+				timeAfterWinning = 1;
 		}
 		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE){	//Red 'X' is clicked
 			done = true;
@@ -260,7 +260,7 @@ int main(void){
 
 void changeState(int newState, int &oldState){
 	int tempScore = gameState->getScore();
-	for(int i=UP;i<ESCAPE;i++){
+	for(int i=UP;i<ENTER+1;i++){
 		keys[i] = false;
 		timeSinceDown[i] = 0;
 	}

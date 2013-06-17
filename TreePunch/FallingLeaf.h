@@ -13,4 +13,5 @@ class FallingLeaf{
 		void Init(int seed);
 		void Render();
 		int getY();
+		~FallingLeaf();
 };

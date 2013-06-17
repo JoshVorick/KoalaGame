@@ -14,17 +14,16 @@ Menu::Menu(){
 	x = width/2;
 	helpMenu = al_load_bitmap("Audio and Images/HelpMenu.bmp");
 	background = al_load_bitmap("Audio and Images/MenuBackground.bmp");
+	font36 = al_load_font("Audio and Images/AAJAX.ttf", fontHeight, 0);
+	selected = LEAF_PUZZLE;
+	options = 3;
 }
 
 void Menu::Init(int w, int h, int curLevel, int curScore){
 	width = w;
 	height = h;
-	fontHeight = 36;
-	options = 3;
-	selected = LEAF_PUZZLE;
 	y = fontHeight * options/2.0;
 	x = width/2;
-	font = al_load_font("Audio and Images/AAJAX.ttf", fontHeight, 0);
 }
 
 void Menu::Update(){	
@@ -62,20 +61,27 @@ void Menu::Render(){
 		al_draw_bitmap(helpMenu, 0, 0, 0);
 	int tempY = height/2 - y;
 	if(selected == LEAF_PUNCH)
-		al_draw_text(font, al_map_rgb(0,0,255), x, tempY, ALLEGRO_ALIGN_CENTRE, "Play Game");
+		al_draw_text(font36, al_map_rgb(0,0,255), x, tempY, ALLEGRO_ALIGN_CENTRE, "Play Game");
 	else 
-		al_draw_text(font, al_map_rgb(255,0,255), x, tempY, ALLEGRO_ALIGN_CENTRE, "Play Game");
+		al_draw_text(font36, al_map_rgb(255,0,255), x, tempY, ALLEGRO_ALIGN_CENTRE, "Play Game");
 	tempY += fontHeight;
 	
 	if(selected == HELP)
-		al_draw_text(font, al_map_rgb(0,0,255), x, tempY, ALLEGRO_ALIGN_CENTRE, "Help");
+		al_draw_text(font36, al_map_rgb(0,0,255), x, tempY, ALLEGRO_ALIGN_CENTRE, "Help");
 	else 
-		al_draw_text(font, al_map_rgb(255,0,255), x, tempY, ALLEGRO_ALIGN_CENTRE, "Help");
+		al_draw_text(font36, al_map_rgb(255,0,255), x, tempY, ALLEGRO_ALIGN_CENTRE, "Help");
 	tempY += fontHeight;
 	
 	if(selected == EXIT)
-		al_draw_text(font, al_map_rgb(0,0,255), x, tempY, ALLEGRO_ALIGN_CENTRE, "Exit");
+		al_draw_text(font36, al_map_rgb(0,0,255), x, tempY, ALLEGRO_ALIGN_CENTRE, "Exit");
 	else 
-		al_draw_text(font, al_map_rgb(255,0,255), x, tempY, ALLEGRO_ALIGN_CENTRE, "Exit");
-	al_draw_textf(font, al_map_rgb(100,100,100), 5, 5, 0, "X: %i Y: %i", mouseX, mouseY);
+		al_draw_text(font36, al_map_rgb(255,0,255), x, tempY, ALLEGRO_ALIGN_CENTRE, "Exit");
+	al_draw_textf(font36, al_map_rgb(100,100,100), 5, 5, 0, "X: %i Y: %i", mouseX, mouseY);
+}
+
+Menu::~Menu(){
+	al_destroy_bitmap(helpMenu);
+	al_destroy_bitmap(background);
+	al_destroy_font(font36);
+	al_destroy_sample(clicked);
 }

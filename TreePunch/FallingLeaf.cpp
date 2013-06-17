@@ -26,3 +26,7 @@ void FallingLeaf::Render(){
 	al_draw_bitmap(leaf, startX, t*velocity + startY, 0);
 	t++;
 }
+
+FallingLeaf::~FallingLeaf(){
+	al_destroy_bitmap(leaf);
+}

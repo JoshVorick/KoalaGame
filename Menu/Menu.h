@@ -20,7 +20,7 @@ class Menu : public GameState{
 		int x;
 		int y;
 		
-		ALLEGRO_FONT *font;
+		ALLEGRO_FONT *font36;
 		ALLEGRO_SAMPLE *clicked;
 		ALLEGRO_BITMAP *helpMenu, *background;
 		
@@ -31,4 +31,5 @@ class Menu : public GameState{
 		void Render();
 		void Move(int dir);
 		void Init(int w, int h, int curLevel, int curScore);	
+		~Menu();
 };

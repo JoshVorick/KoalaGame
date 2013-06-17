@@ -341,3 +341,16 @@ void LeafPuzzle::Render(){
 	al_draw_textf(font36, al_map_rgb(255,0,255), 15, 15, 0, "Score: %i", score);
 	al_draw_textf(font36, al_map_rgb(255,0,255), 15, 50, 0, "Moves made: %i Level: %i", movesMade, level+1);
 }
+
+LeafPuzzle::~LeafPuzzle(){
+	al_destroy_bitmap(paw);
+	al_destroy_bitmap(selector);
+	al_destroy_bitmap(rock);
+	al_destroy_bitmap(omNomNom);
+	al_destroy_bitmap(background);
+	al_destroy_bitmap(leafUp);
+	al_destroy_bitmap(leafDown);
+	al_destroy_font(font36);
+	for(int i=0;i<4;i++)
+		al_destroy_sample(leafFlipSounds[i]);
+}
