@@ -30,7 +30,7 @@ void Menu::Update(){
 	if(mouseY < (height/2 + Menu::y) && mouseY > (height/2 - Menu::y)){	//*Mouse is below top option and above bottom option
 		int tempY = mouseY;								//So we don't mess up mouseY
 		tempY -= (height/2 - (Menu::y));					//Moves range of y-values so that lower bound is 0
-		selected = ceil((tempY-5) / fontHeight) + 1;	//The -5 adjusts for slight offset of draw_text 
+		selected = ceil((float)(tempY-5) / fontHeight) + 1;	//The -5 adjusts for slight offset of draw_text 
 	}else
 		selected = NONE;
 } 

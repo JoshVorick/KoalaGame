@@ -56,7 +56,7 @@ void LeafPunch::Init(int w, int h, int curLevel, int curScore){ //w = level, h =
 void LeafPunch::Move(int dir){}
 
 void LeafPunch::Enter(){
-	double dist = sqrt((mouseX-curX)*(mouseX-curX) + (mouseY-curY)*(mouseY-curY));
+	double dist = sqrt((double)(mouseX-curX)*(mouseX-curX) + (mouseY-curY)*(mouseY-curY));
 	al_play_sample(treeHit[rand() % 5], 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
 	al_play_sample(treeHit[1], 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
 	if(dist < circleRadius){
@@ -104,7 +104,7 @@ void LeafPunch::Render(){
 	for(int i=0; i<NUM_LEAVES; i++)
 		if(isFalling[i])
 			leaves[i]->Render();
-	double dist = sqrt((mouseX-curX)*(mouseX-curX) + (mouseY-curY)*(mouseY-curY));
+	double dist = sqrt((double)(mouseX-curX)*(mouseX-curX) + (mouseY-curY)*(mouseY-curY));
 	al_draw_textf(font36, al_map_rgb(255,0,255), 5, 5, 0, "Score: %i", score);
 	int scor = abs(((50 - (dist)) / (timeWaited + 20)) * ((curY - prevY) + (curX - prevX)));
 	int health = abs((50 - (dist)));

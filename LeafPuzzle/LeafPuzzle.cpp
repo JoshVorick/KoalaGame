@@ -105,8 +105,8 @@ void LeafPuzzle::Move(int dir){
 					switch (flipped){
 						case 2:{
 							flipped = 7;
-							if(theSelected + numRows + (int)floor(theSelected/numRows)%2 < numRows * numCol)
-								theSelected += numRows + (int)floor(theSelected/numRows)%2 - 1;
+							if(theSelected + numRows + (int)floor(1.0*theSelected/numRows)%2 < numRows * numCol)
+								theSelected += numRows + (int)floor(1.0*theSelected/numRows)%2 - 1;
 							break;
 						}
 						case 7:{
@@ -123,8 +123,8 @@ void LeafPuzzle::Move(int dir){
 						}
 						case 1:{
 							flipped = 5;
-							if(theSelected + numRows + (int)floor(theSelected/numRows)%2 < numRows * numCol - 1)
-								theSelected += numRows + (int)floor(theSelected/numRows)%2;
+							if(theSelected + numRows + (int)floor(1.0*theSelected/numRows)%2 < numRows * numCol - 1)
+								theSelected += numRows + (int)floor(1.0*theSelected/numRows)%2;
 							break;
 						}
 						case 5:{
@@ -168,26 +168,26 @@ void LeafPuzzle::Move(int dir){
 			if(type >= 3){
 				if(flipped > 2){
 					if(theSelected % (2*numRows) != 2*numRows - 1 && theSelected >= numRows)
-						selected[1] = theSelected - numRows + (int)floor(theSelected/numRows)%2;
+						selected[1] = theSelected - numRows + (int)floor(1.0*theSelected/numRows)%2;
 					else {
 						selected[1] = -2; 
 						doesWork = false;
 					}
 					if(theSelected % (2*numRows) != 0 && theSelected >= numRows)
-						selected[2] = theSelected - numRows + (int)floor(theSelected/numRows)%2 - 1;
+						selected[2] = theSelected - numRows + (int)floor(1.0*theSelected/numRows)%2 - 1;
 					else {
 						selected[2] = -2; 
 						doesWork = false;
 					}
 				}else{
 					if(theSelected % (2*numRows) != 0 && (theSelected/numRows) < numCol - 1 )
-						selected[1] = theSelected + numRows + (int)floor(theSelected/numRows)%2 - 1;
+						selected[1] = theSelected + numRows + (int)floor(1.0*theSelected/numRows)%2 - 1;
 					else {
 						selected[1] = -2; 
 						doesWork = false;
 					}
 					if(theSelected % (2*numRows) != 2*numRows - 1 && (theSelected/numRows) < numCol - 1 )
-						selected[2] = theSelected + numRows + (int)floor(theSelected/numRows)%2;
+						selected[2] = theSelected + numRows + (int)(floor(1.0*theSelected/numRows))%2;
 					else {
 						selected[2] = -2; 
 						doesWork = false;
@@ -215,7 +215,7 @@ void LeafPuzzle::Move(int dir){
 				switch (flipped){
 					case 0:{
 						if(theSelected >= numRows && theSelected % numRows != 0)
-							selected[4] = theSelected - numRows + (int)floor(theSelected/numRows)%2 - 1;
+							selected[4] = theSelected - numRows + (int)floor(1.0*theSelected/numRows)%2 - 1;
 						else {
 							selected[4] = -2; 
 							doesWork = false;
@@ -247,7 +247,7 @@ void LeafPuzzle::Move(int dir){
 					}
 					case 4:{
 						if(theSelected < numRows * (numCol - 1) && theSelected % numRows != 0)
-							selected[4] = theSelected + numRows - 1 + (int)floor(theSelected/numRows)%2;
+							selected[4] = theSelected + numRows - 1 + (int)floor(1.0*theSelected/numRows)%2;
 						else {
 							selected[4] = -2; 
 							doesWork = false;
@@ -282,15 +282,15 @@ void LeafPuzzle::Enter(){
 		isPaw = false;
 	if(doesWork && !isPaw){
 		isPaw = true;
-		pawXCenter = 150 + 70*(theSelected%numRows) + 34*((int)(floor(theSelected/numRows))%2) - 5;
-		pawYCenter = 50 + 85*((int)(floor(theSelected/numRows)) % numCol);
+		pawXCenter = 150 + 70*(theSelected%numRows) + 34*((int)(floor(1.0*theSelected/numRows))%2) - 5;
+		pawYCenter = 50 + 85*((int)(floor(1.0*theSelected/numRows)) % numCol);
 		if(type ==3)
 			pawXCenter -= 25;
 		if(type >= 4)
 			pawXCenter -= 50;
 		int angle = rand() % 360;
-		pawVelX = 100 * cos(angle) * cos(angle);
-		pawVelY = 100 * sin(angle) * sin(angle);
+		pawVelX = 100 * cos(1.0*angle) * cos(1.0*angle);
+		pawVelY = 100 * sin(1.0*angle) * sin(1.0*angle);
 		if(rand() % 2)
 			pawVelY *= -1;
 		if(rand() % 2)
@@ -318,16 +318,16 @@ void LeafPuzzle::Render(){
 	int yStart = 50;
 	for(int i=0;i<arraySize;i++){
 		if(leafStates[i] == 3)
-			al_draw_bitmap(rock, xStart + 70*(i%numRows) + 34*((int)(floor(i/numRows))%2), yStart + 85*((int)(floor(i/numRows)) % numCol),0);
+			al_draw_bitmap(rock, xStart + 70*(i%numRows) + 34*((int)(floor(1.0*i/numRows))%2), yStart + 85*((int)(floor(1.0*i/numRows)) % numCol),0);
 		else if(leafStates[i])
-			al_draw_bitmap(leafUp, xStart + 70*(i%numRows) + 34*((int)(floor(i/numRows))%2), yStart + 85*((int)(floor(i/numRows)) % numCol),0);
+			al_draw_bitmap(leafUp, xStart + 70*(i%numRows) + 34*((int)(floor(1.0*i/numRows))%2), yStart + 85*((int)(floor(1.0*i/numRows)) % numCol),0);
 		else
-			al_draw_bitmap(leafDown, xStart + 70*(i%numRows) + 34*((int)(floor(i/numRows))%2), yStart + 85*((int)(floor(i/numRows)) % numCol),0);
+			al_draw_bitmap(leafDown, xStart + 70*(i%numRows) + 34*((int)(floor(1.0*i/numRows))%2), yStart + 85*((int)(floor(1.0*i/numRows)) % numCol),0);
 	}
 	for(int i=0;i<6;i++){
 		if(selected[i] > -1 && selected[i] < arraySize){
-			int xCorner = xStart + 10 + 70*(selected[i]%numRows) + 34*((int)(floor(selected[i]/numRows))%2);
-			int yCorner = yStart + 30 + 85*((int)(floor(selected[i]/numRows)) % numCol);
+			int xCorner = xStart + 10 + 70*(selected[i]%numRows) + 34*((int)(floor(1.0*selected[i]/numRows))%2);
+			int yCorner = yStart + 30 + 85*((int)(floor(1.0*selected[i]/numRows)) % numCol);
 			if (doesWork)
 				al_draw_bitmap(selector, xCorner-10, yCorner-20, 0);
 			else
